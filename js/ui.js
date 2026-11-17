@@ -130,6 +130,21 @@ export function renderFlightDetail(flight, airportsByCode, nowMin) {
   followBar.hidden = false;
 }
 
+/** Wire the flight search box; onPick fires with the chosen flight. */
+export function wireFlightSearch(flights, onPick) {
+  const input = el('flightSearch');
+  if (!input) return;
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (q.length < 2) return;
+    const hit = flights.find((f) =>
+      f.id.toLowerCase().includes(q)
+      || `${f.from}${f.to}`.toLowerCase().includes(q)
+      || (f.airline ?? '').toLowerCase().includes(q));
+    if (hit) onPick(hit);
+  });
+}
+
 /** Wire the airport search box; onPick fires with the chosen airport. */
 export function wireAirportSearch(airports, onPick) {
   const input = el('airportSearch');
