@@ -27,7 +27,12 @@
   border: 1px solid var(--line); background: var(--bg);
   outline: none;
 }
-#airportSearch:focus { border-color: var(--accent); }
+#airportSearch:focus, #flightSearch:focus { border-color: var(--accent); }
+#flightSearch {
+  width: 100%; padding: 8px 10px; border-radius: 9px; margin-top: 8px;
+  border: 1px solid var(--line); background: var(--bg);
+  outline: none;
+}
 #airportResults, #flightList { list-style: none; margin: 8px 0 0; padding: 0; }
 #airportResults li, #flightList li {
   padding: 7px 8px; border-radius: 8px; cursor: pointer;
