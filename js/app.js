@@ -4,13 +4,13 @@ import { cleanDataset, loadBundledData, validateAirport, validateFlight, validat
 import { airborneFlights, flightDistanceKm } from './flights.js';
 import { fetchLiveData } from './live.js';
 import { drawFlatGraticule, drawFlatMap, drawGraticule, drawLand, drawLimb, drawNight, drawOcean } from './render.js';
-import { drawAirports, drawFlightArcs, drawLiveFlights, drawMeasurement, drawPlane, drawPulse, drawQuakes, drawSatellites, drawSunMarker, hitTestPlanes, hitTestQuakes } from './layers.js';
+import { drawAirports, drawFlightArcs, drawLiveFlights, drawMeasurement, drawPlane, drawPulse, drawQuakes, drawSatellites, drawSunMarker, hitTestPlanes, hitTestQuakes, hitTestSatellites } from './layers.js';
 import { advanceSimMinutes, formatTimeUTC, minutesOfDay, subsolarPoint } from './time.js';
 import { applyKey, isGlobeKey } from './keyboard.js';
 import { loadPrefs, mergePrefs, savePrefs } from './persist.js';
 import { clearMeasurement, measureClick, newMeasurement } from './measure.js';
 import {
-  el, renderFlightDetail, renderFlightList, renderLayerCounts, renderMeasureResult, renderQuakeDetail, renderStats,
+  el, renderFlightDetail, renderFlightList, renderLayerCounts, renderMeasureResult, renderQuakeDetail, renderQuakeList, renderSatelliteDetail, renderStats,
   renderTopStats, setClockText, setDataSourceLabel, setScrubTime,
   wireAirportSearch, wireLayerToggles,
 } from './ui.js';
@@ -185,8 +185,25 @@ function refreshSidebar() {
     const km = flightDistanceKm(a.flight, state.airportsByCode) ?? 0;
     if (!longest || km > longest.km) longest = { flight: a.flight, km };
   }
-  renderStats({ airborne: airborne.length, totalFlights: state.flights.length, quakes: state.quakes, sats: state.satellites.length, longest });
+  // Busiest airport across the whole sample day (departures + arrivals).
+  const counts = new Map();
+  for (const f of state.flights) {
+    counts.set(f.from, (counts.get(f.from) ?? 0) + 1);
+    counts.set(f.to, (counts.get(f.to) ?? 0) + 1);
+  }
+  let busiest = null;
+  for (const [code, count] of counts) {
+    if (!busiest || count > busiest.count) busiest = { code, count };
+  }
+  renderStats({ airborne: airborne.length, totalFlights: state.flights.length, quakes: state.quakes, sats: state.satellites.length, longest, busiest });
   renderFlightList(airborne, state.airportsByCode, state.selectedFlight?.id, selectFlight);
+  renderQuakeList(state.quakes, (q) => {
+    state.selectedFlight = null;
+    renderQuakeDetail(q);
+    state.centerLat = q.lat;
+    state.centerLon = q.lon;
+    state.pulse = { lat: q.lat, lon: q.lon, startedAt: performance.now() };
+  });
   renderFlightDetail(state.selectedFlight, state.airportsByCode, state.simMin);
   setClockText(`${formatTimeUTC(state.simMin)} UTC`);
   setScrubTime(`${formatTimeUTC(state.simMin)} UTC`);
@@ -263,6 +280,16 @@ function wireControls() {
       if (qhit) {
         state.selectedFlight = null;
         renderQuakeDetail(qhit.quake);
+        return;
+      }
+      if (state.mode === 'globe') {
+        const shit = hitTestSatellites(state.satellites, state.simMin,
+          { centerLat: state.centerLat, centerLon: state.centerLon, cx: rect.width / 2, cy: rect.height / 2 },
+          viewSize.size * 0.42 * state.zoom, px, py);
+        if (shit) {
+          state.selectedFlight = null;
+          renderSatelliteDetail(shit.satellite, state.simMin);
+        }
       }
     }
   });
@@ -322,6 +349,14 @@ function wireControls() {
     btn.addEventListener('click', () => {
       state.simMin = Number(btn.dataset.preset);
       el('scrubber').value = String(state.simMin);
+    });
+  });
+  document.querySelectorAll('#regionBar [data-region]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const [lat, lon] = btn.dataset.region.split(',').map(Number);
+      state.centerLat = lat;
+      state.centerLon = lon;
+      state.following = false;
     });
   });
   window.addEventListener('keydown', (e) => {
