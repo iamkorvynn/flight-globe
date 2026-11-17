@@ -18,7 +18,7 @@ test('bundled airports: 50 valid rows, unique codes', async () => {
   assert.equal(airports.length, 50);
   const { valid, dropped } = cleanDataset(airports, validateAirport);
   assert.equal(dropped, 0);
-  assert.equal(new Set(valid.map((a) => a.code)).size, 40);
+  assert.equal(new Set(valid.map((a) => a.code)).size, 50);
 });
 
 test('bundled flights: every route references known airports', async () => {
