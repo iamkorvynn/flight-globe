@@ -104,6 +104,22 @@ LAND = {
                    [-10, 120], [-8, 118], [-5, 119], [-2, 121], [0, 120],
                    [2, 118], [4, 116], [5, 113], [4, 108], [2, 102], [6, 95]],
     "borneo": [[4, 117], [2, 110], [-2, 110], [-4, 113], [-3, 116], [1, 117], [4, 117]],
+    "hawaii": [[19.6, -155.9], [20.9, -156.4], [21.4, -157.8], [22.2, -159.8],
+               [21.9, -160.2], [20.7, -156.9], [19.6, -155.9]],
+    "iceland": [[63.4, -22.0], [64.0, -22.5], [64.8, -23.9], [65.5, -24.5],
+                [66.0, -22.8], [66.4, -18.8], [65.8, -16.5], [64.9, -14.0],
+                [64.0, -15.5], [63.4, -19.5], [63.4, -22.0]],
+    "ireland": [[51.7, -9.5], [52.0, -10.0], [53.0, -10.0], [54.0, -10.0],
+                [55.0, -8.0], [55.3, -6.0], [54.5, -5.5], [53.5, -6.0],
+                [52.5, -6.5], [51.7, -8.5], [51.7, -9.5]],
+    "sri_lanka": [[9.8, 79.9], [9.3, 80.8], [8.6, 81.2], [7.9, 81.5],
+                  [6.9, 81.9], [6.0, 81.0], [6.4, 79.9], [7.5, 79.8],
+                  [8.9, 79.9], [9.8, 79.9]],
+    "taiwan": [[25.3, 121.6], [25.0, 121.9], [24.0, 121.6], [23.0, 121.2],
+               [22.6, 121.1], [22.6, 120.2], [23.5, 120.1], [24.5, 120.2], [25.3, 121.6]],
+    "cuba": [[23.2, -81.2], [23.0, -79.5], [22.5, -78.5], [21.8, -77.5],
+             [21.0, -76.5], [20.3, -75.0], [20.2, -74.1], [21.0, -75.5],
+             [21.8, -77.0], [22.8, -79.0], [23.2, -81.2]],
 }
 
 AIRPORTS = [
@@ -147,6 +163,16 @@ AIRPORTS = [
     ("LIS", "Lisbon Humberto Delgado", "Lisbon", 38.77, -9.13),
     ("YVR", "Vancouver Intl", "Vancouver", 49.20, -123.18),
     ("SCL", "Santiago Intl", "Santiago", -33.39, -70.79),
+    ("DFW", "Dallas/Fort Worth Intl", "Dallas", 32.90, -97.04),
+    ("DEN", "Denver Intl", "Denver", 39.86, -104.68),
+    ("SEA", "Seattle–Tacoma Intl", "Seattle", 47.45, -122.31),
+    ("MIA", "Miami Intl", "Miami", 25.79, -80.29),
+    ("BOS", "Boston Logan Intl", "Boston", 42.36, -71.01),
+    ("IAD", "Washington Dulles Intl", "Washington", 38.95, -77.46),
+    ("HNL", "Honolulu Intl", "Honolulu", 21.32, -157.92),
+    ("DUB", "Dublin Airport", "Dublin", 53.42, -6.27),
+    ("WAW", "Warsaw Chopin", "Warsaw", 52.17, 20.97),
+    ("HEL", "Helsinki Airport", "Helsinki", 60.32, 24.96),
 ]
 
 def hhmm(mins):
@@ -178,6 +204,12 @@ ROUTES = [
     ("LA800", "SCL", "GRU", 900, 1140), ("EK421", "DXB", "BOM", 600, 900),
     ("SQ26", "SIN", "FRA", 1400, 360), ("EK225", "DXB", "SFO", 540, 1260),
     ("BA269", "LHR", "LAX", 660, 1140), ("QF63", "SYD", "JNB", 660, 1200),
+    ("AA100", "DFW", "LHR", 1020, 240), ("UA1200", "DEN", "FRA", 1080, 240),
+    ("AS1", "SEA", "HND", 840, 1320), ("AA900", "MIA", "MAD", 1140, 120),
+    ("BA212", "BOS", "LHR", 1140, 220), ("UA918", "IAD", "FRA", 1080, 180),
+    ("HA1", "HNL", "HND", 720, 1200), ("EI101", "DUB", "JFK", 840, 1200),
+    ("LO1", "WAW", "ORD", 720, 1140), ("AY101", "HEL", "JFK", 900, 1260),
+    ("AA101", "LHR", "DFW", 600, 1080), ("UA901", "FRA", "DEN", 660, 1080),
 ]
 # IAH is not in the airport list; drop routes referencing unknown codes.
 AIRPORT_CODES = {a[0] for a in AIRPORTS}
@@ -193,7 +225,9 @@ AIRLINES = {"SQ": "Singapore Airlines", "EK": "Emirates", "BA": "British Airways
             "CX": "Cathay Pacific", "DL": "Delta", "NZ": "Air New Zealand",
             "TG": "Thai Airways", "MH": "Malaysia Airlines", "LX": "SWISS",
             "SK": "SAS", "OS": "Austrian", "A3": "Aegean", "KQ": "Kenya Airways",
-            "TP": "TAP Air Portugal"}
+            "TP": "TAP Air Portugal", "AA": "American Airlines", "AS": "Alaska Airlines",
+            "HA": "Hawaiian Airlines", "EI": "Aer Lingus", "LO": "LOT Polish Airlines",
+            "AY": "Finnair"}
 
 def build():
     airports = [{"code": c, "name": n, "city": city, "lat": lat, "lon": lon}
@@ -245,6 +279,10 @@ def build():
         {"name": "OneWeb-0442", "inclination": 87.9, "periodMin": 109.2, "phase": 140, "altitudeKm": 1200},
         {"name": "GPS III SV06", "inclination": 55.0, "periodMin": 718.0, "phase": 260, "altitudeKm": 20180},
         {"name": "GOES-16", "inclination": 0.1, "periodMin": 1436.0, "phase": 285, "altitudeKm": 35786},
+        {"name": "Starlink-9021", "inclination": 53.0, "periodMin": 95.3, "phase": 130, "altitudeKm": 550},
+        {"name": "Starlink-9107", "inclination": 53.0, "periodMin": 95.3, "phase": 285, "altitudeKm": 550},
+        {"name": "Sentinel-1A", "inclination": 98.2, "periodMin": 98.6, "phase": 55, "altitudeKm": 693},
+        {"name": "Terra", "inclination": 98.2, "periodMin": 98.9, "phase": 200, "altitudeKm": 705},
     ]
     land = {"source": "FlightGlobe simplified coastline (hand-drawn, recognisable outlines)",
             "polygons": [[list(p) for p in poly] for poly in LAND.values()]}
