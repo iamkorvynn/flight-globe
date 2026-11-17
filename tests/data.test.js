@@ -31,9 +31,9 @@ test('bundled flights: every route references known airports', async () => {
   assert.ok(valid.every((f) => f.from !== f.to));
 });
 
-test('bundled earthquakes: 30 valid rows, magnitudes in range', async () => {
+test('bundled earthquakes: 40 valid rows, magnitudes in range', async () => {
   const quakes = await load('earthquakes');
-  assert.equal(quakes.length, 30);
+  assert.equal(quakes.length, 40);
   const { dropped } = cleanDataset(quakes, validateQuake);
   assert.equal(dropped, 0);
   assert.ok(quakes.every((q) => q.mag >= 0 && q.mag <= 10));
