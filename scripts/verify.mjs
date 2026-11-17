@@ -13,7 +13,9 @@ const CHECKS = [
   '/js/app.js', '/js/math.js', '/js/geo.js', '/js/time.js', '/js/data.js',
   '/js/live.js', '/js/flights.js', '/js/quakes.js', '/js/satellites.js',
   '/js/render.js', '/js/layers.js', '/js/ui.js',
+  '/js/keyboard.js', '/js/persist.js', '/js/measure.js',
   '/css/base.css', '/css/globe.css', '/css/panel.css', '/css/controls.css', '/css/responsive.css',
+  '/css/toolbar.css', '/public/favicon.svg',
   '/data/airports.json', '/data/flights.json', '/data/earthquakes.json',
   '/data/satellites.json', '/data/land.json',
 ];
