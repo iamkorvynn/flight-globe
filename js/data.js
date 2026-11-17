@@ -8,7 +8,7 @@ export const DATA_FILES = {
   flights: 'data/flights.json',
   earthquakes: 'data/earthquakes.json',
   satellites: 'data/satellites.json',
-  land: 'data/land.json',
+  landManifest: 'data/land/manifest.json',
 };
 
 export function isValidLat(lat) {
@@ -68,9 +68,30 @@ export async function loadBundledData() {
     fetchJson(DATA_FILES.flights),
     fetchJson(DATA_FILES.earthquakes),
     fetchJson(DATA_FILES.satellites),
-    fetchJson(DATA_FILES.land),
+    loadLand(),
   ]);
   return { airports, flights, earthquakes, satellites, land };
+}
+
+/** Load the coastline from its per-continent parts via the manifest. */
+export async function loadLand() {
+  const manifest = await fetchJson(DATA_FILES.landManifest);
+  if (!manifest || !Array.isArray(manifest.files)) return null;
+  const parts = await Promise.all(manifest.files.map((f) => fetchJson(`data/${f}`)));
+  const polygons = [];
+  for (const part of parts) {
+    if (part && Array.isArray(part.polygons)) polygons.push(...part.polygons);
+  }
+  return polygons.length ? { polygons } : null;
+}
+
+/** Merge already-loaded land parts (used by tests and the validator). */
+export function mergeLandParts(parts) {
+  const polygons = [];
+  for (const part of parts) {
+    if (part && Array.isArray(part.polygons)) polygons.push(...part.polygons);
+  }
+  return { polygons };
 }
 
 /** Filter a dataset to its valid rows and count what was dropped. */
