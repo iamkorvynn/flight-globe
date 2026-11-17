@@ -20,7 +20,16 @@ static file server (the browser's ES-module loader needs `http(s)`, not
 All drawing goes through `js/math.js` `project()` (orthographic projection)
 so every layer shares one consistent lat/lon → screen mapping. The inverse,
 `unproject()`, exists for future click-to-locate features and is covered by
-tests.
+tests. Layer functions accept an optional **projector** so the flat-map mode
+can reuse them: `makeGlobeProjector(view, radius)` and
+`makeFlatProjector(w, h)` both return `(lat, lon, lift) => {x, y, visible}`.
+
+## Views
+
+- **Globe** (default): orthographic disc, drag/zoom, night shading,
+  follow mode, auto-rotate.
+- **Flat map**: equirectangular rectangle, same layers, no night shading.
+  Toggled with the toolbar button or the `F` key.
 
 ## State
 
