@@ -51,6 +51,20 @@ export function renderFlightList(airborne, airportsByCode, selectedId, onPick) {
   if (!sorted.length) ul.innerHTML = '<li class="muted">No flights airborne at this time — drag the timeline.</li>';
 }
 
+/** Render the quake list (strongest first, top 8). */
+export function renderQuakeList(quakes, onPick) {
+  const ul = el('quakeList');
+  if (!ul) return;
+  ul.innerHTML = '';
+  const sorted = [...quakes].sort((a, b) => b.mag - a.mag).slice(0, 8);
+  for (const q of sorted) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="code">M${q.mag.toFixed(1)}</span><span class="route">${q.place}</span>`;
+    li.addEventListener('click', () => onPick(q));
+    ul.appendChild(li);
+  }
+}
+
 /** Render the flight detail panel. */
 export function renderFlightDetail(flight, airportsByCode, nowMin) {
   const body = el('detailBody');
