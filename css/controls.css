@@ -1,0 +1,16 @@
+/* FlightGlobe — timeline scrubber footer. */
+#timelineBar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 20px; border-top: 1px solid var(--line);
+  background: rgba(10, 15, 28, .9);
+}
+#scrubber { flex: 1; accent-color: var(--accent); height: 6px; }
+#scrubTime { font-variant-numeric: tabular-nums; font-weight: 700; min-width: 92px; }
+#simDate { color: var(--muted); font-size: 13px; }
+.speed { color: var(--muted); font-size: 13px; display: flex; gap: 6px; align-items: center; }
+.speed select {
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 8px; padding: 5px 7px;
+}
+#playBtn { min-width: 42px; }
+#nowBtn { background: var(--panel2); color: var(--ink); }
