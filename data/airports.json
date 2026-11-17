@@ -278,5 +278,75 @@
     "city": "Santiago",
     "lat": -33.39,
     "lon": -70.79
+  },
+  {
+    "code": "DFW",
+    "name": "Dallas/Fort Worth Intl",
+    "city": "Dallas",
+    "lat": 32.9,
+    "lon": -97.04
+  },
+  {
+    "code": "DEN",
+    "name": "Denver Intl",
+    "city": "Denver",
+    "lat": 39.86,
+    "lon": -104.68
+  },
+  {
+    "code": "SEA",
+    "name": "Seattle\u2013Tacoma Intl",
+    "city": "Seattle",
+    "lat": 47.45,
+    "lon": -122.31
+  },
+  {
+    "code": "MIA",
+    "name": "Miami Intl",
+    "city": "Miami",
+    "lat": 25.79,
+    "lon": -80.29
+  },
+  {
+    "code": "BOS",
+    "name": "Boston Logan Intl",
+    "city": "Boston",
+    "lat": 42.36,
+    "lon": -71.01
+  },
+  {
+    "code": "IAD",
+    "name": "Washington Dulles Intl",
+    "city": "Washington",
+    "lat": 38.95,
+    "lon": -77.46
+  },
+  {
+    "code": "HNL",
+    "name": "Honolulu Intl",
+    "city": "Honolulu",
+    "lat": 21.32,
+    "lon": -157.92
+  },
+  {
+    "code": "DUB",
+    "name": "Dublin Airport",
+    "city": "Dublin",
+    "lat": 53.42,
+    "lon": -6.27
+  },
+  {
+    "code": "WAW",
+    "name": "Warsaw Chopin",
+    "city": "Warsaw",
+    "lat": 52.17,
+    "lon": 20.97
+  },
+  {
+    "code": "HEL",
+    "name": "Helsinki Airport",
+    "city": "Helsinki",
+    "lat": 60.32,
+    "lon": 24.96
   }
 ]
