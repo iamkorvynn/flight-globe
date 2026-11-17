@@ -36,6 +36,14 @@ pulls live data from free public APIs when the network is available.
 - **Follow a flight** — locks the camera onto one plane as it flies.
 - **Airport search** — type a code, city or name; clicking a result centres
   the globe on that airport.
+- **Flight search** — find a flight by id (SQ318, BA117…) and jump to it.
+- **Departures board** — the next flights out after the scrubbed time.
+- **Measure tool** — click two points on the globe for the great-circle
+  distance between them.
+- **Flat-map mode** — the same layers on an equirectangular map (F key).
+- **Keyboard shortcuts** — arrows rotate, +/− zoom, Space plays/pauses,
+  F flat map, R reset view, ? opens the shortcut panel.
+- **Export PNG** — download the current globe view as an image.
 - **Layer stats** — flights airborne now, longest route in the air, strongest
   quake, satellites tracked.
 - **Day/night shading** — the terminator is computed from the real solar
