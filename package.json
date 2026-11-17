@@ -1,0 +1,1 @@
+{"description":"FlightGlobe — a one-screen real-time world globe: flights, earthquakes, satellites, and a time scrubber.","engines":{"node":">=18"},"license":"MIT","name":"flight-globe","scripts":{"build":"node scripts/build-check.mjs","start":"node scripts/serve.mjs","test":"node --test tests/","validate-data":"node scripts/validate-data.mjs"},"type":"module","version":"1.0.0"}
