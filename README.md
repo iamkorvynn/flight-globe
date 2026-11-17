@@ -62,6 +62,8 @@ python3 -m http.server 8080
 
 Then open <http://localhost:8080>. No build step, no install step.
 
+One-command full check: `npm run smoke` (build + tests + data + serve).
+
 ## Tests & checks
 
 ```bash
@@ -110,6 +112,15 @@ tests/                node:test suites for every module above
 
 Drag the timeline: the sun moves, the night sweeps across the map, and every
 plane slides along its arc — the whole planet as a clock you can spin.
+
+## Known limitations
+
+- Coastlines are hand-drawn and simplified (see `docs/LAND.md`).
+- Satellite positions use a simple circular-orbit model, not SGP4/TLE.
+- Bundled flights are invented sample schedules, not a real timetable.
+- Live OpenSky positions are shown as markers only — no live schedules.
+- Night shading is globe-only (flat-map mode has none).
+- Local times shown for airports are approximate (longitude-based).
 
 ## License
 
