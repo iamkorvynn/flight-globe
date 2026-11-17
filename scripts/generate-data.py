@@ -259,7 +259,6 @@ def build():
         manifest.append(f"land/{name}.json")
     (land_dir / "manifest.json").write_text(
         json.dumps({"files": manifest}, indent=2) + "\n")
-    (DATA / "land.json").write_text(json.dumps(land, indent=2) + "\n")
     (DATA / "flights.json").write_text(json.dumps(flights, indent=2) + "\n")
     (DATA / "earthquakes.json").write_text(json.dumps(quakes, indent=2) + "\n")
     (DATA / "satellites.json").write_text(json.dumps(sats, indent=2) + "\n")
