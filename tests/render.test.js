@@ -4,7 +4,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { drawGraticule, drawLand, drawLimb, drawNight, drawOcean } from '../js/render.js';
-import { drawPlane, drawQuakes, hitTestPlanes } from '../js/layers.js';
+import { drawPlane, drawQuakes, drawLiveFlights, drawPulse, drawSunMarker, hitTestPlanes, hitTestQuakes, drawMeasurement } from '../js/layers.js';
 
 function makeCtx() {
   const calls = [];
@@ -101,4 +101,40 @@ test('hitTestPlanes finds the nearest plane within tolerance', () => {
   assert.equal(hitTestPlanes(planes, 105, 102).flight.id, 'A');
   assert.equal(hitTestPlanes(planes, 500, 500), null);
   assert.equal(hitTestPlanes([], 100, 100), null);
+});
+
+test('drawLiveFlights draws green dots for visible live flights only', () => {
+  const ctx = makeCtx();
+  drawLiveFlights(ctx, [
+    { lat: 20, lon: 10, callsign: 'BAW1' },
+    { lat: -20, lon: -170, callsign: 'FAR1' },
+  ], VIEW, 300);
+  const arcs = ctx.calls.filter((c) => c[0] === 'arc');
+  assert.equal(arcs.length, 1, 'only the visible live flight is drawn');
+});
+
+test('drawSunMarker draws at the subsolar point when visible', () => {
+  const ctx = makeCtx();
+  drawSunMarker(ctx, 20, 10, VIEW, 300);
+  assert.ok(ctx.calls.some((c) => c[0] === 'arc'), 'sun marker drawn');
+  const ctx2 = makeCtx();
+  drawSunMarker(ctx2, -20, -170, VIEW, 300);
+  assert.equal(ctx2.calls.filter((c) => c[0] === 'arc').length, 0, 'hidden sun not drawn');
+});
+
+test('hitTestQuakes finds the nearest quake', () => {
+  const hit = hitTestQuakes(
+    [{ lat: 20, lon: 10, mag: 6.5, place: 'centre' }, { lat: -20, lon: -170, mag: 5, place: 'far' }],
+    VIEW, 300, 452, 448,
+  );
+  assert.ok(hit && hit.quake.place === 'centre');
+  assert.equal(hitTestQuakes([{ lat: 20, lon: 10, mag: 6.5, place: 'centre' }], VIEW, 300, 100, 100), null);
+});
+
+test('drawPulse and drawMeasurement complete without throwing', () => {
+  const ctx = makeCtx();
+  assert.doesNotThrow(() => drawPulse(ctx, 20, 10, VIEW, 300, 0.5));
+  assert.doesNotThrow(() => drawMeasurement(ctx, { start: { lat: 51, lon: 0 }, end: { lat: 40, lon: -74 } }, VIEW, 300));
+  assert.doesNotThrow(() => drawMeasurement(ctx, { start: null, end: null }, VIEW, 300));
+  assert.ok(ctx.calls.some((c) => c === 'stroke'), 'measurement arc stroked');
 });
