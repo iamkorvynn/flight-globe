@@ -33,13 +33,14 @@ export function drawOcean(ctx, w, h, radius) {
 }
 
 /** Draw one land polygon (array of [lat, lon]); skips back-face segments. */
-export function drawLandPolygon(ctx, poly, view, radius) {
+export function drawLandPolygon(ctx, poly, view, radius, projector) {
   const { centerLat, centerLon, cx, cy } = view;
+  const proj = projector ?? ((lat, lon) => project(lat, lon, centerLat, centerLon, radius, cx, cy));
   ctx.beginPath();
   let started = false;
   let prevVisible = false;
   for (const [lat, lon] of poly) {
-    const p = project(lat, lon, centerLat, centerLon, radius, cx, cy);
+    const p = proj(lat, lon);
     if (p.visible) {
       if (!started || !prevVisible) ctx.moveTo(p.x, p.y);
       else ctx.lineTo(p.x, p.y);
@@ -55,21 +56,43 @@ export function drawLandPolygon(ctx, poly, view, radius) {
   ctx.stroke();
 }
 
-export function drawLand(ctx, land, view, radius) {
+export function drawLand(ctx, land, view, radius, projector) {
   if (!land || !Array.isArray(land.polygons)) return;
-  for (const poly of land.polygons) drawLandPolygon(ctx, poly, view, radius);
+  for (const poly of land.polygons) drawLandPolygon(ctx, poly, view, radius, projector);
 }
 
-/** Latitude/longitude grid lines every 30°. */
-export function drawGraticule(ctx, view, radius) {
+/** Flat-map land: fills the rectangle background and draws every polygon. */
+export function drawFlatMap(ctx, land, w, h, projector) {
+  ctx.fillStyle = COLORS.ocean;
+  ctx.fillRect(0, 0, w, h);
+  if (!land || !Array.isArray(land.polygons)) return;
+  for (const poly of land.polygons) {
+    ctx.beginPath();
+    poly.forEach(([lat, lon], i) => {
+      const p = projector(lat, lon);
+      if (i === 0) ctx.moveTo(p.x, p.y);
+      else ctx.lineTo(p.x, p.y);
+    });
+    ctx.closePath();
+    ctx.fillStyle = COLORS.land;
+    ctx.fill();
+    ctx.strokeStyle = COLORS.landEdge;
+    ctx.lineWidth = 0.7;
+    ctx.stroke();
+  }
+}
+
+/** Latitude/longitude grid lines every 30°. Accepts an optional projector. */
+export function drawGraticule(ctx, view, radius, projector) {
   const { centerLat, centerLon, cx, cy } = view;
+  const proj = projector ?? ((lat, lon) => project(lat, lon, centerLat, centerLon, radius, cx, cy));
   ctx.strokeStyle = COLORS.graticule;
   ctx.lineWidth = 0.6;
   for (let lat = -60; lat <= 60; lat += 30) {
     ctx.beginPath();
     let pen = false;
     for (let lon = -180; lon <= 180; lon += 4) {
-      const p = project(lat, lon, centerLat, centerLon, radius, cx, cy);
+      const p = proj(lat, lon);
       if (!p.visible) { pen = false; continue; }
       if (!pen) { ctx.moveTo(p.x, p.y); pen = true; }
       else ctx.lineTo(p.x, p.y);
@@ -80,11 +103,33 @@ export function drawGraticule(ctx, view, radius) {
     ctx.beginPath();
     let pen = false;
     for (let lat = -90; lat <= 90; lat += 4) {
-      const p = project(lat, lon, centerLat, centerLon, radius, cx, cy);
+      const p = proj(lat, lon);
       if (!p.visible) { pen = false; continue; }
       if (!pen) { ctx.moveTo(p.x, p.y); pen = true; }
       else ctx.lineTo(p.x, p.y);
     }
+    ctx.stroke();
+  }
+}
+
+/** Flat-map graticule: straight lat/lon lines across the rectangle. */
+export function drawFlatGraticule(ctx, w, h, projector) {
+  ctx.strokeStyle = COLORS.graticule;
+  ctx.lineWidth = 0.6;
+  for (let lat = -60; lat <= 60; lat += 30) {
+    const a = projector(lat, -180);
+    const b = projector(lat, 180);
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+  }
+  for (let lon = -150; lon <= 150; lon += 30) {
+    const a = projector(-90, lon);
+    const b = projector(90, lon);
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
     ctx.stroke();
   }
 }
