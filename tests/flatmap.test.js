@@ -5,7 +5,10 @@ import { makeFlatProjector, makeGlobeProjector, projectFlat, unprojectFlat } fro
 
 test('projectFlat: corners and centre map as expected', () => {
   const w = 720, h = 360;
-  assert.deepEqual(projectFlat(90, -180, w, h), { x: 0, y: 0, visible: true, z: 1 });
+  // Note: normLon maps -180 to 180, so the -180 meridian lands at x = w,
+  // the same line as +180 on an equirectangular map.
+  assert.deepEqual(projectFlat(90, -180, w, h), { x: 720, y: 0, visible: true, z: 1 });
+  assert.deepEqual(projectFlat(90, -179, w, h), { x: 2, y: 0, visible: true, z: 1 });
   assert.deepEqual(projectFlat(-90, 180, w, h), { x: 720, y: 360, visible: true, z: 1 });
   const c = projectFlat(0, 0, w, h);
   assert.equal(c.x, 360);
