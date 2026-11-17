@@ -16,6 +16,16 @@
   color: var(--muted); font-size: 12.5px;
   background: rgba(5, 7, 13, .6); padding: 5px 10px; border-radius: 999px;
 }
+#regionBar {
+  position: absolute; bottom: 96px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 6px; align-items: center;
+  color: var(--muted); font-size: 12.5px;
+  background: rgba(5, 7, 13, .6); padding: 5px 10px; border-radius: 999px;
+}
+#regionBar button { background: rgba(13, 20, 36, .85); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 9px;
+  padding: 6px 11px; font-size: 13px; font-weight: 600; }
+#regionBar button:hover { border-color: var(--accent); }
 #measureHint {
   position: absolute; top: 58px; right: 18px;
   background: rgba(245, 158, 11, .15); border: 1px solid var(--accent2);
