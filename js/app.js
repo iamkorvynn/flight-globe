@@ -193,8 +193,31 @@ function wireControls() {
     state.dragging = false;
     if (state.moved < 6) {
       const rect = canvas.getBoundingClientRect();
-      const hit = hitTestPlanes(state._planes ?? [], e.clientX - rect.left, e.clientY - rect.top);
-      if (hit) selectFlight(hit.flight);
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+      if (state.measureMode) {
+        const ll = unproject(px, py, state.centerLat, state.centerLon,
+          viewSize.size * 0.42 * state.zoom, rect.width / 2, rect.height / 2);
+        if (ll) {
+          const done = measureClick(state.measurement, ll.lat, ll.lon);
+          if (done) {
+            renderMeasureResult(done);
+            state.measureMode = false;
+            el('measureBtn').classList.remove('active');
+            el('measureHint').hidden = true;
+          }
+        }
+        return;
+      }
+      const hit = hitTestPlanes(state._planes ?? [], px, py);
+      if (hit) { selectFlight(hit.flight); return; }
+      const qhit = hitTestQuakes(state.quakes,
+        { centerLat: state.centerLat, centerLon: state.centerLon, cx: rect.width / 2, cy: rect.height / 2 },
+        viewSize.size * 0.42 * state.zoom, px, py);
+      if (qhit) {
+        state.selectedFlight = null;
+        renderQuakeDetail(qhit.quake);
+      }
     }
   });
   canvas.addEventListener('wheel', (e) => {
@@ -218,6 +241,52 @@ function wireControls() {
   el('speedSel').addEventListener('change', (e) => { state.speed = Number(e.target.value); });
   el('followBtn').addEventListener('click', () => { state.following = true; });
   el('unfollowBtn').addEventListener('click', () => { state.following = false; });
+  el('resetViewBtn').addEventListener('click', () => {
+    state.centerLat = 20; state.centerLon = 10; state.zoom = 1; state.following = false;
+  });
+  el('rotateBtn').addEventListener('click', (e) => {
+    state.autoRotate = !state.autoRotate;
+    e.currentTarget.classList.toggle('active', state.autoRotate);
+  });
+  el('measureBtn').addEventListener('click', (e) => {
+    state.measureMode = !state.measureMode;
+    if (state.measureMode) clearMeasurement(state.measurement);
+    e.currentTarget.classList.toggle('active', state.measureMode);
+    el('measureHint').hidden = !state.measureMode;
+  });
+  el('measureCancelBtn').addEventListener('click', () => {
+    state.measureMode = false;
+    clearMeasurement(state.measurement);
+    el('measureBtn').classList.remove('active');
+    el('measureHint').hidden = true;
+  });
+  el('exportBtn').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.download = `flightglobe-${formatTimeUTC(state.simMin).replace(':', '')}-utc.png`;
+    a.href = el('globe').toDataURL('image/png');
+    a.click();
+  });
+  document.querySelectorAll('#presetBar [data-preset]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.simMin = Number(btn.dataset.preset);
+      el('scrubber').value = String(state.simMin);
+    });
+  });
+  window.addEventListener('keydown', (e) => {
+    const tag = document.activeElement?.tagName;
+    if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+    if (e.key === ' ') {
+      e.preventDefault();
+      state.playing = !state.playing;
+      el('playBtn').textContent = state.playing ? '⏸' : '▶';
+      return;
+    }
+    if (isGlobeKey(e.key)) {
+      e.preventDefault();
+      state.following = false;
+      applyKey(state, e.key);
+    }
+  });
   state.layers = wireLayerToggles((layers) => { state.layers = layers; });
   window.addEventListener('resize', fitCanvas);
 }
