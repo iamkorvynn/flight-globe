@@ -13,9 +13,9 @@ async function load(name) {
   return JSON.parse(await readFile(`${ROOT}/data/${name}.json`, 'utf8'));
 }
 
-test('bundled airports: 40 valid rows, unique codes', async () => {
+test('bundled airports: 50 valid rows, unique codes', async () => {
   const airports = await load('airports');
-  assert.equal(airports.length, 40);
+  assert.equal(airports.length, 50);
   const { valid, dropped } = cleanDataset(airports, validateAirport);
   assert.equal(dropped, 0);
   assert.equal(new Set(valid.map((a) => a.code)).size, 40);
@@ -39,9 +39,9 @@ test('bundled earthquakes: 30 valid rows, magnitudes in range', async () => {
   assert.ok(quakes.every((q) => q.mag >= 0 && q.mag <= 10));
 });
 
-test('bundled satellites: 12 valid rows', async () => {
+test('bundled satellites: 16 valid rows', async () => {
   const sats = await load('satellites');
-  assert.equal(sats.length, 12);
+  assert.equal(sats.length, 16);
   const { dropped } = cleanDataset(sats, validateSatellite);
   assert.equal(dropped, 0);
 });
