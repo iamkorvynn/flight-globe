@@ -210,6 +210,9 @@ ROUTES = [
     ("HA1", "HNL", "HND", 720, 1200), ("EI101", "DUB", "JFK", 840, 1200),
     ("LO1", "WAW", "ORD", 720, 1140), ("AY101", "HEL", "JFK", 900, 1260),
     ("AA101", "LHR", "DFW", 600, 1080), ("UA901", "FRA", "DEN", 660, 1080),
+    ("EK3", "DXB", "LHR", 840, 1260), ("SQ317", "LHR", "SIN", 660, 60),
+    ("QF11", "SYD", "LAX", 840, 1560), ("NZ2", "LAX", "AKL", 1200, 300),
+    ("LH714", "FRA", "HND", 780, 60), ("AF276", "CDG", "HND", 780, 120),
 ]
 # IAH is not in the airport list; drop routes referencing unknown codes.
 AIRPORT_CODES = {a[0] for a in AIRPORTS}
@@ -259,6 +262,11 @@ def build():
         (44.1, 7.9, "Ligurian Sea, Italy"), (34.5, -120.1, "California, USA"),
         (-15.9, -172.9, "Samoa region"), (56.5, -153.9, "Kodiak, Alaska"),
         (13.1, 43.4, "Gulf of Aden"), (29.5, 51.5, "Southern Iran"),
+        (41.2, 73.8, "Kyrgyzstan"), (-6.9, 110.6, "Java, Indonesia"),
+        (55.7, -3.2, "North Sea"), (19.4, -155.3, "Hawaii, USA"),
+        (37.1, 36.8, "Southern Türkiye"), (-23.5, -46.6, "São Paulo, Brazil"),
+        (31.5, 130.2, "Kyushu, Japan"), (-33.0, 71.6, "Valparaíso, Chile"),
+        (43.0, 12.5, "Umbria, Italy"), (27.9, 85.3, "Bagmati, Nepal"),
     ]
     quakes = []
     for i, (lat, lon, place) in enumerate(quake_places):
