@@ -82,5 +82,33 @@
     "periodMin": 1436.0,
     "phase": 285,
     "altitudeKm": 35786
+  },
+  {
+    "name": "Starlink-9021",
+    "inclination": 53.0,
+    "periodMin": 95.3,
+    "phase": 130,
+    "altitudeKm": 550
+  },
+  {
+    "name": "Starlink-9107",
+    "inclination": 53.0,
+    "periodMin": 95.3,
+    "phase": 285,
+    "altitudeKm": 550
+  },
+  {
+    "name": "Sentinel-1A",
+    "inclination": 98.2,
+    "periodMin": 98.6,
+    "phase": 55,
+    "altitudeKm": 693
+  },
+  {
+    "name": "Terra",
+    "inclination": 98.2,
+    "periodMin": 98.9,
+    "phase": 200,
+    "altitudeKm": 705
   }
 ]
