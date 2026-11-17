@@ -1,0 +1,32 @@
+/* FlightGlobe — base styles: dark space theme, system fonts, no dependencies. */
+:root {
+  --bg: #05070d;
+  --bg2: #0a0f1c;
+  --panel: #0d1424;
+  --panel2: #111a2e;
+  --ink: #e8eefc;
+  --muted: #8b98b4;
+  --line: #1e2a44;
+  --accent: #38bdf8;
+  --accent2: #f59e0b;
+  --flight: #38bdf8;
+  --quake: #f97316;
+  --sat: #a78bfa;
+  --radius: 14px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 800px at 30% 20%, #0b1226 0%, var(--bg) 60%);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+h1, h2 { margin: 0; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+.muted { color: var(--muted); }
+#app { display: flex; flex-direction: column; height: 100vh; min-height: 640px; }
