@@ -131,6 +131,31 @@ export function drawSatellites(ctx, satellites, nowMin, view, radius, projector)
   }
 }
 
+/** Draw a fading trail behind a flight: the arc segment already flown. */
+export function drawTrail(ctx, flight, airportsByCode, progress, view, radius, projector) {
+  const a = airportsByCode.get(flight.from);
+  const b = airportsByCode.get(flight.to);
+  if (!a || !b || progress <= 0) return;
+  const proj = projector ?? ((lat, lon, lift = 1) => {
+    const { centerLat, centerLon, cx, cy } = view;
+    return project(lat, lon, centerLat, centerLon, radius * lift, cx, cy);
+  });
+  const pts = sampleArc(a.lat, a.lon, b.lat, b.lon, 48, 0.09)
+    .filter((_, i) => i / 48 <= progress);
+  if (pts.length < 2) return;
+  ctx.beginPath();
+  let pen = false;
+  for (const pt of pts) {
+    const p = proj(pt.lat, pt.lon, pt.lift);
+    if (!p.visible) { pen = false; continue; }
+    if (!pen) { ctx.moveTo(p.x, p.y); pen = true; }
+    else ctx.lineTo(p.x, p.y);
+  }
+  ctx.strokeStyle = 'rgba(245, 158, 11, 0.8)';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+}
+
 /** Hit-test: nearest airborne plane within `tolPx` of a screen point. */
 export function hitTestPlanes(planes, px, py, tolPx = 14) {
   let best = null;
@@ -175,6 +200,20 @@ export function drawSunMarker(ctx, sunLat, sunLon, view, radius) {
   ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
   ctx.fillStyle = '#fef08a';
   ctx.fill();
+}
+
+/** Hit-test: nearest airport within `tolPx` of a screen point. */
+export function hitTestAirports(airports, view, radius, px, py, tolPx = 12) {
+  const { centerLat, centerLon, cx, cy } = view;
+  let best = null;
+  let bestD = tolPx;
+  for (const a of airports) {
+    const p = project(a.lat, a.lon, centerLat, centerLon, radius, cx, cy);
+    if (!p.visible) continue;
+    const d = Math.hypot(p.x - px, p.y - py);
+    if (d < bestD) { bestD = d; best = { airport: a, screen: p }; }
+  }
+  return best;
 }
 
 /** Hit-test: nearest satellite dot within `tolPx` of a screen point. */
