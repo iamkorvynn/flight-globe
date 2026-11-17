@@ -5,8 +5,11 @@ import { quakeColor, quakeRadiusPx } from './quakes.js';
 import { satelliteOrbitRing, satellitePosition } from './satellites.js';
 
 /** Draw great-circle arcs for airborne flights (faint) + full route arcs. */
-export function drawFlightArcs(ctx, flights, airportsByCode, view, radius, selectedId) {
-  const { centerLat, centerLon, cx, cy } = view;
+export function drawFlightArcs(ctx, flights, airportsByCode, view, radius, selectedId, projector) {
+  const proj = projector ?? ((lat, lon, lift = 1) => {
+    const { centerLat, centerLon, cx, cy } = view;
+    return project(lat, lon, centerLat, centerLon, radius * lift, cx, cy);
+  });
   for (const f of flights) {
     const a = airportsByCode.get(f.from);
     const b = airportsByCode.get(f.to);
@@ -15,8 +18,7 @@ export function drawFlightArcs(ctx, flights, airportsByCode, view, radius, selec
     ctx.beginPath();
     let pen = false;
     for (const pt of pts) {
-      const liftR = radius * pt.lift;
-      const p = project(pt.lat, pt.lon, centerLat, centerLon, liftR, cx, cy);
+      const p = proj(pt.lat, pt.lon, pt.lift);
       if (!p.visible) { pen = false; continue; }
       if (!pen) { ctx.moveTo(p.x, p.y); pen = true; }
       else ctx.lineTo(p.x, p.y);
@@ -30,8 +32,11 @@ export function drawFlightArcs(ctx, flights, airportsByCode, view, radius, selec
 
 /** Draw a small plane marker (triangle) at a lat/lon, rotated by heading. */
 export function drawPlane(ctx, lat, lon, lift, headingDeg, view, radius, opts = {}) {
-  const { centerLat, centerLon, cx, cy } = view;
-  const p = project(lat, lon, centerLat, centerLon, radius * lift, cx, cy);
+  const proj = opts.projector ?? ((la, lo, li = 1) => {
+    const { centerLat, centerLon, cx, cy } = view;
+    return project(la, lo, centerLat, centerLon, radius * li, cx, cy);
+  });
+  const p = proj(lat, lon, lift);
   if (!p.visible) return null;
   const size = opts.size ?? 7;
   ctx.save();
@@ -52,10 +57,13 @@ export function drawPlane(ctx, lat, lon, lift, headingDeg, view, radius, opts = 
 }
 
 /** Draw airport dots. */
-export function drawAirports(ctx, airports, view, radius) {
-  const { centerLat, centerLon, cx, cy } = view;
+export function drawAirports(ctx, airports, view, radius, projector) {
+  const proj = projector ?? ((lat, lon) => {
+    const { centerLat, centerLon, cx, cy } = view;
+    return project(lat, lon, centerLat, centerLon, radius, cx, cy);
+  });
   for (const a of airports) {
-    const p = project(a.lat, a.lon, centerLat, centerLon, radius, cx, cy);
+    const p = proj(a.lat, a.lon);
     if (!p.visible) continue;
     ctx.beginPath();
     ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
@@ -65,10 +73,13 @@ export function drawAirports(ctx, airports, view, radius) {
 }
 
 /** Draw earthquake markers, sized + coloured by magnitude. */
-export function drawQuakes(ctx, quakes, view, radius) {
-  const { centerLat, centerLon, cx, cy } = view;
+export function drawQuakes(ctx, quakes, view, radius, projector) {
+  const proj = projector ?? ((lat, lon) => {
+    const { centerLat, centerLon, cx, cy } = view;
+    return project(lat, lon, centerLat, centerLon, radius, cx, cy);
+  });
   for (const q of quakes) {
-    const p = project(q.lat, q.lon, centerLat, centerLon, radius, cx, cy);
+    const p = proj(q.lat, q.lon);
     if (!p.visible) continue;
     const r = quakeRadiusPx(q.mag);
     ctx.beginPath();
@@ -88,14 +99,17 @@ export function drawQuakes(ctx, quakes, view, radius) {
 }
 
 /** Draw satellite orbit rings + moving dots. */
-export function drawSatellites(ctx, satellites, nowMin, view, radius) {
-  const { centerLat, centerLon, cx, cy } = view;
+export function drawSatellites(ctx, satellites, nowMin, view, radius, projector) {
+  const proj = projector ?? ((lat, lon, lift = 1) => {
+    const { centerLat, centerLon, cx, cy } = view;
+    return project(lat, lon, centerLat, centerLon, radius * lift, cx, cy);
+  });
   for (const s of satellites) {
     const ring = satelliteOrbitRing(s, 96);
     ctx.beginPath();
     let pen = false;
     for (const pt of ring) {
-      const p = project(pt.lat, pt.lon, centerLat, centerLon, radius * 1.12, cx, cy);
+      const p = proj(pt.lat, pt.lon, 1.12);
       if (!p.visible) { pen = false; continue; }
       if (!pen) { ctx.moveTo(p.x, p.y); pen = true; }
       else ctx.lineTo(p.x, p.y);
@@ -105,7 +119,7 @@ export function drawSatellites(ctx, satellites, nowMin, view, radius) {
     ctx.stroke();
 
     const pos = satellitePosition(s, nowMin);
-    const p = project(pos.lat, pos.lon, centerLat, centerLon, radius * 1.12, cx, cy);
+    const p = proj(pos.lat, pos.lon, 1.12);
     if (!p.visible) continue;
     ctx.beginPath();
     ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
