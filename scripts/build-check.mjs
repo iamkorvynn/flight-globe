@@ -14,9 +14,15 @@ const REQUIRED = [
   'css/base.css', 'css/globe.css', 'css/panel.css', 'css/controls.css', 'css/responsive.css',
   'js/app.js', 'js/math.js', 'js/geo.js', 'js/time.js', 'js/data.js', 'js/live.js',
   'js/flights.js', 'js/quakes.js', 'js/satellites.js', 'js/render.js', 'js/layers.js', 'js/ui.js',
+  'js/keyboard.js', 'js/persist.js', 'js/measure.js',
+  'css/toolbar.css', 'public/favicon.svg',
+  'docs/DATA_SOURCES.md', 'docs/ARCHITECTURE.md', 'docs/FAQ.md', 'docs/ROADMAP.md',
+  'tests/math.test.js', 'tests/geo.test.js', 'tests/time.test.js', 'tests/data.test.js',
+  'tests/flights.test.js', 'tests/satellites.test.js', 'tests/quakes.test.js',
+  'tests/render.test.js', 'tests/keyboard.test.js', 'tests/persist.test.js', 'tests/measure.test.js',
   'data/airports.json', 'data/flights.json', 'data/earthquakes.json',
   'data/satellites.json', 'data/land.json',
-  'package.json', 'README.md',
+  'package.json', 'README.md', 'LICENSE', 'CHANGELOG.md',
 ];
 
 let failed = false;
