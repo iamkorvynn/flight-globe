@@ -310,13 +310,37 @@ async function init() {
     state.centerLat = a.lat;
     state.centerLon = a.lon;
     state.following = false;
+    state.pulse = { lat: a.lat, lon: a.lon, startedAt: performance.now() };
   });
   setDataSourceLabel('Bundled sample data', false);
+
+  // Restore saved prefs (layers + camera), if any.
+  const prefs = mergePrefs(
+    { centerLat: 20, centerLon: 10, zoom: 1, layers: state.layers },
+    loadPrefs(window.localStorage),
+  );
+  state.centerLat = prefs.centerLat;
+  state.centerLon = prefs.centerLon;
+  state.zoom = prefs.zoom;
+  if (prefs.layers) {
+    state.layers = { ...state.layers, ...prefs.layers };
+    for (const [key, id] of [['flights', 'layerFlights'], ['quakes', 'layerQuakes'], ['sats', 'layerSats'], ['night', 'layerNight'], ['graticule', 'layerGraticule']]) {
+      const box = el(id);
+      if (box && typeof state.layers[key] === 'boolean') box.checked = state.layers[key];
+    }
+  }
+  // Save prefs when the page unloads.
+  window.addEventListener('beforeunload', () => {
+    savePrefs(window.localStorage, {
+      centerLat: state.centerLat, centerLon: state.centerLon, zoom: state.zoom, layers: state.layers,
+    });
+  });
 
   // Optional live data: best effort, never blocks the bundled experience.
   try {
     const live = await fetchLiveData();
     if (live.quakes) { state.quakes = live.quakes.filter(validateQuake); }
+    if (live.flights) { state.liveFlights = live.flights; }
     if (live.flights || live.quakes) {
       setDataSourceLabel(
         `Live: ${live.flights ? 'OpenSky flights' : ''}${live.flights && live.quakes ? ' + ' : ''}${live.quakes ? 'USGS quakes' : ''} · fallback bundled`,
