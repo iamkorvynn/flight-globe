@@ -93,3 +93,35 @@ export function angularDistance(lat1, lon1, lat2, lon2) {
   const dot = clamp(a[0] * b[0] + a[1] * b[1] + a[2] * b[2], -1, 1);
   return toDeg(Math.acos(dot));
 }
+
+// ---- Equirectangular (flat-map) projection ---------------------------------
+
+/** Flat-map: lat/lon to pixels in a w×h rectangle. */
+export function projectFlat(lat, lon, w, h) {
+  return {
+    x: ((normLon(lon) + 180) / 360) * w,
+    y: ((90 - lat) / 180) * h,
+    visible: true,
+    z: 1,
+  };
+}
+
+/** Flat-map inverse: pixels back to lat/lon (null outside the rectangle). */
+export function unprojectFlat(px, py, w, h) {
+  if (px < 0 || px > w || py < 0 || py > h) return null;
+  return { lat: 90 - (py / h) * 180, lon: (px / w) * 360 - 180 };
+}
+
+/**
+ * Build a projector function (lat, lon, lift=1) => {x, y, visible, z}
+ * for the orthographic globe, for a given view + radius.
+ */
+export function makeGlobeProjector(view, radius) {
+  const { centerLat, centerLon, cx, cy } = view;
+  return (lat, lon, lift = 1) => project(lat, lon, centerLat, centerLon, radius * lift, cx, cy);
+}
+
+/** Build a projector function for the flat equirectangular map. */
+export function makeFlatProjector(w, h) {
+  return (lat, lon) => projectFlat(lat, lon, w, h);
+}
