@@ -33,35 +33,29 @@ export function vecToLatLon([x, y, z]) {
 /**
  * Rotate a unit vector so the globe centre (centerLat, centerLon) faces the viewer.
  * Returns view-space [x, y, z] where +z points at the viewer, +x right, +y up.
+ * Standard orthographic projection:
+ *   x = cos φ · sin(λ − λ0)
+ *   y = cos φ0 · sin φ − sin φ0 · cos φ · cos(λ − λ0)
+ *   z = sin φ0 · sin φ + cos φ0 · cos φ · cos(λ − λ0)
  */
 export function rotateToView(vec, centerLat, centerLon) {
-  const [x, y, z] = vec;
-  const lo = toRad(-centerLon);
-  const cLo = Math.cos(lo), sLo = Math.sin(lo);
-  // Rotate around the z axis by -centerLon so centre longitude faces +x.
-  const x1 = x * cLo - y * sLo;
-  const y1 = x * sLo + y * cLo;
-  const z1 = z;
-  // Rotate around the y axis by -centerLat so centre latitude faces +z.
-  const la = toRad(-centerLat);
-  const cLa = Math.cos(la), sLa = Math.sin(la);
-  const x2 = x1 * cLa + z1 * sLa;
-  const z2 = -x1 * sLa + z1 * cLa;
-  return [x2, y1, z2];
+  const { lat, lon } = vecToLatLon(vec);
+  const phi = toRad(lat);
+  const phi0 = toRad(centerLat);
+  const dLambda = toRad(lon - centerLon);
+  return [
+    Math.cos(phi) * Math.sin(dLambda),
+    Math.cos(phi0) * Math.sin(phi) - Math.sin(phi0) * Math.cos(phi) * Math.cos(dLambda),
+    Math.sin(phi0) * Math.sin(phi) + Math.cos(phi0) * Math.cos(phi) * Math.cos(dLambda),
+  ];
 }
 
 /** Inverse of rotateToView: view-space vector back to world unit vector. */
 export function rotateFromView([x, y, z], centerLat, centerLon) {
-  const la = toRad(centerLat);
-  const cLa = Math.cos(la), sLa = Math.sin(la);
-  const x1 = x * cLa - z * sLa;
-  const z1 = x * sLa + z * cLa;
-  const y1 = y;
-  const lo = toRad(centerLon);
-  const cLo = Math.cos(lo), sLo = Math.sin(lo);
-  const x2 = x1 * cLo - y1 * sLo;
-  const y2 = x1 * sLo + y1 * cLo;
-  return [x2, y2, z1];
+  const phi0 = toRad(centerLat);
+  const lat = toDeg(Math.asin(clamp(z * Math.sin(phi0) + y * Math.cos(phi0), -1, 1)));
+  const lon = centerLon + toDeg(Math.atan2(x, z * Math.cos(phi0) - y * Math.sin(phi0)));
+  return latLonToVec(lat, lon);
 }
 
 /**

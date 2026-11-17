@@ -16,12 +16,12 @@ test('project: globe centre maps to canvas centre and is visible', () => {
 test('project: antipode is hidden, limb point has z ~ 0', () => {
   const anti = project(-20, -170, 20, 10, R, CX, CY);
   assert.equal(anti.visible, false);
-  const limb = project(20, 100, 20, 10, R, CX, CY);
+  const limb = project(0, 100, 20, 10, R, CX, CY); // exactly 90° from centre
   assert.ok(Math.abs(limb.z) < 1e-9, `limb z=${limb.z}`);
 });
 
 test('project/unproject round-trip for visible points', () => {
-  const cases = [[0, 0, 0, 0], [51.47, -0.45, 20, 10], [-33.95, 151.18, 20, 10], [35.55, 139.78, 0, 120], [64, -20, 50, -30]];
+  const cases = [[0, 0, 0, 0], [51.47, -0.45, 20, 10], [-33.95, 151.18, -10, 140], [35.55, 139.78, 0, 120], [64, -20, 50, -30]];
   for (const [lat, lon, clat, clon] of cases) {
     const p = project(lat, lon, clat, clon, R, CX, CY);
     assert.equal(p.visible, true, `${lat},${lon} should be visible`);

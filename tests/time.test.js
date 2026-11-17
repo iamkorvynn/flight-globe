@@ -23,8 +23,9 @@ test('flightProgress: mid-flight is 0.5, outside returns null', () => {
   assert.equal(flightProgress(600, 1080, 1080), 1);
   assert.equal(flightProgress(600, 1080, 599), null);
   assert.equal(flightProgress(600, 1080, 1081), null);
-  // Overnight flight wraps midnight.
-  assert.equal(flightProgress(1380, 120, 0), 0.5);
+  // Overnight flight wraps midnight: dep 23:00, arr 02:00 (180 min).
+  // 00:30 is 90 min in -> halfway.
+  assert.equal(flightProgress(1380, 120, 30), 0.5);
   assert.equal(flightProgress(1380, 120, 1300), null);
   assert.equal(isAirborne(1380, 120, 60), true);
   assert.equal(isAirborne(1380, 120, 600), false);
