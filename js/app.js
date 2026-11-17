@@ -4,13 +4,14 @@ import { cleanDataset, loadBundledData, validateAirport, validateFlight, validat
 import { airborneFlights, flightDistanceKm } from './flights.js';
 import { fetchLiveData } from './live.js';
 import { drawFlatGraticule, drawFlatMap, drawGraticule, drawLand, drawLimb, drawNight, drawOcean } from './render.js';
-import { drawAirports, drawFlightArcs, drawLiveFlights, drawMeasurement, drawPlane, drawPulse, drawQuakes, drawSatellites, drawSunMarker, hitTestPlanes, hitTestQuakes, hitTestSatellites } from './layers.js';
+import { drawAirports, drawFlightArcs, drawLiveFlights, drawMeasurement, drawPlane, drawPulse, drawQuakes, drawSatellites, drawSunMarker, drawTrail, hitTestAirports, hitTestPlanes, hitTestQuakes, hitTestSatellites } from './layers.js';
 import { advanceSimMinutes, formatTimeUTC, minutesOfDay, subsolarPoint } from './time.js';
 import { applyKey, isGlobeKey } from './keyboard.js';
 import { loadPrefs, mergePrefs, savePrefs } from './persist.js';
 import { clearMeasurement, measureClick, newMeasurement } from './measure.js';
+import { nextDepartures, busiestAirport } from './departures.js';
 import {
-  el, renderFlightDetail, renderFlightList, renderLayerCounts, renderMeasureResult, renderQuakeDetail, renderQuakeList, renderSatelliteDetail, renderStats,
+  el, renderAirportDetail, renderDepartures, renderFlightDetail, renderFlightList, renderLayerCounts, renderMeasureResult, renderQuakeDetail, renderQuakeList, renderSatelliteDetail, renderStats,
   renderTopStats, setClockText, setDataSourceLabel, setScrubTime,
   wireAirportSearch, wireLayerToggles,
 } from './ui.js';
@@ -101,6 +102,11 @@ function draw() {
           size: state.selectedFlight?.id === item.flight.id ? 9 : 7, projector });
       planes.push({ ...item, screen });
     }
+    // Fading trail behind the selected flight.
+    if (state.selectedFlight) {
+      const sel = airborne.find((a) => a.flight.id === state.selectedFlight.id);
+      if (sel) drawTrail(ctx, sel.flight, state.airportsByCode, sel.progress, view, radius, projector);
+    }
   }
   state._planes = planes;
   state._airborne = airborne;
@@ -186,17 +192,10 @@ function refreshSidebar() {
     if (!longest || km > longest.km) longest = { flight: a.flight, km };
   }
   // Busiest airport across the whole sample day (departures + arrivals).
-  const counts = new Map();
-  for (const f of state.flights) {
-    counts.set(f.from, (counts.get(f.from) ?? 0) + 1);
-    counts.set(f.to, (counts.get(f.to) ?? 0) + 1);
-  }
-  let busiest = null;
-  for (const [code, count] of counts) {
-    if (!busiest || count > busiest.count) busiest = { code, count };
-  }
+  const busiest = busiestAirport(state.flights);
   renderStats({ airborne: airborne.length, totalFlights: state.flights.length, quakes: state.quakes, sats: state.satellites.length, longest, busiest });
   renderFlightList(airborne, state.airportsByCode, state.selectedFlight?.id, selectFlight);
+  renderDepartures(nextDepartures(state.flights, state.simMin, 8), selectFlight);
   renderQuakeList(state.quakes, (q) => {
     state.selectedFlight = null;
     renderQuakeDetail(q);
@@ -274,6 +273,17 @@ function wireControls() {
       }
       const hit = hitTestPlanes(state._planes ?? [], px, py);
       if (hit) { selectFlight(hit.flight); return; }
+      if (state.mode === 'globe') {
+        const ahit = hitTestAirports(state.airports,
+          { centerLat: state.centerLat, centerLon: state.centerLon, cx: rect.width / 2, cy: rect.height / 2 },
+          viewSize.size * 0.42 * state.zoom, px, py);
+        if (ahit) {
+          state.selectedFlight = null;
+          const deps = state.flights.filter((f) => f.from === ahit.airport.code).length;
+          renderAirportDetail(ahit.airport, state.simMin, deps);
+          return;
+        }
+      }
       const qhit = hitTestQuakes(state.quakes,
         { centerLat: state.centerLat, centerLon: state.centerLon, cx: rect.width / 2, cy: rect.height / 2 },
         viewSize.size * 0.42 * state.zoom, px, py);
