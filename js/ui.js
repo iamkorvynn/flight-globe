@@ -118,6 +118,41 @@ export function setDataSourceLabel(text, live) {
   d.classList.toggle('live', Boolean(live));
 }
 
+/** Show a clicked earthquake in the detail panel. */
+export function renderQuakeDetail(quake) {
+  if (!quake) return;
+  el('detailTitle').textContent = `Earthquake · M${quake.mag.toFixed(1)}`;
+  el('detailBody').innerHTML = `
+    <p class="big">${quake.place}</p>
+    <p>Magnitude <b>M${quake.mag.toFixed(1)}</b> · ${quakeSeverity(quake.mag)}</p>
+    <p>Location <b>${quake.lat.toFixed(2)}°, ${quake.lon.toFixed(2)}°</b>${quake.depthKm ? ` · Depth <b>${quake.depthKm} km</b>` : ''}</p>
+    ${quake.time ? `<p class="muted">${quake.time}</p>` : ''}`;
+  el('followBar').hidden = true;
+}
+
+/** Show a clicked satellite in the detail panel. */
+export function renderSatelliteDetail(sat, nowMin) {
+  if (!sat) return;
+  el('detailTitle').textContent = `Satellite · ${sat.name}`;
+  el('detailBody').innerHTML = `
+    <p class="big">${sat.name}</p>
+    <p>Inclination <b>${sat.inclination}°</b> · Period <b>${sat.periodMin} min</b></p>
+    <p>Altitude <b>${sat.altitudeKm.toLocaleString('en-US')} km</b></p>
+    <p class="muted">Position shown for ${formatTimeUTC(nowMin)} UTC. Circular-orbit model — sample data.</p>`;
+  el('followBar').hidden = true;
+}
+
+/** Show the two-point measurement result in the detail panel. */
+export function renderMeasureResult(measurement) {
+  if (!measurement) return;
+  el('detailTitle').textContent = 'Distance measurement';
+  el('detailBody').innerHTML = `
+    <p class="big">${formatKm(measurement.km)}</p>
+    <p>${measurement.start.lat.toFixed(2)}°, ${measurement.start.lon.toFixed(2)}° → ${measurement.end.lat.toFixed(2)}°, ${measurement.end.lon.toFixed(2)}°</p>
+    <p class="muted">Great-circle distance. Click the globe twice to measure again.</p>`;
+  el('followBar').hidden = true;
+}
+
 export function setClockText(text) { el('clock').textContent = text; }
 export function setScrubTime(text) { el('scrubTime').textContent = text; }
 export { minutesBetween };
