@@ -57,7 +57,7 @@ Then open <http://localhost:8080>. No build step, no install step.
 ## Tests & checks
 
 ```bash
-npm test            # 58 unit tests (node:test, no dependencies)
+npm test            # 88 unit tests (node:test, no dependencies)
 npm run build       # build check: all files present, JS parses, JSON valid
 npm run validate-data  # validates every bundled dataset
 ```
