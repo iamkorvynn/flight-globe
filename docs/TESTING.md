@@ -25,6 +25,7 @@ node --test tests/math.test.js   # one file
 | `tests/measure.test.js` | Two-click measurement state machine |
 | `tests/flatmap.test.js` | Equirectangular projection + projectors |
 | `tests/live.test.js` | OpenSky/USGS parsing with a stubbed fetch |
+| `tests/departures.test.js` | Next-departure ordering + busiest airport |
 
 ## Other checks
 
