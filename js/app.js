@@ -1,9 +1,9 @@
 // FlightGlobe — app bootstrap: state, animation loop, drag/zoom, follow mode.
-import { clamp, project, unproject } from './math.js';
+import { clamp, makeFlatProjector, makeGlobeProjector, project, unproject, unprojectFlat } from './math.js';
 import { cleanDataset, loadBundledData, validateAirport, validateFlight, validateLand, validateQuake, validateSatellite } from './data.js';
 import { airborneFlights, flightDistanceKm } from './flights.js';
 import { fetchLiveData } from './live.js';
-import { drawGraticule, drawLand, drawLimb, drawNight, drawOcean } from './render.js';
+import { drawFlatGraticule, drawFlatMap, drawGraticule, drawLand, drawLimb, drawNight, drawOcean } from './render.js';
 import { drawAirports, drawFlightArcs, drawLiveFlights, drawMeasurement, drawPlane, drawPulse, drawQuakes, drawSatellites, drawSunMarker, hitTestPlanes, hitTestQuakes } from './layers.js';
 import { advanceSimMinutes, formatTimeUTC, minutesOfDay, subsolarPoint } from './time.js';
 import { applyKey, isGlobeKey } from './keyboard.js';
@@ -28,6 +28,7 @@ const state = {
   layers: { flights: true, quakes: true, sats: true, night: true, graticule: false },
   selectedFlight: null,
   following: false,
+  mode: 'globe', // 'globe' | 'flat'
   autoRotate: false,
   measureMode: false,
   measurement: newMeasurement(),
@@ -72,20 +73,22 @@ function draw() {
   const { size, dpr } = viewSize;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, size, size);
+  if (state.mode === 'flat') { drawFlat(); return; }
   const radius = size * 0.42 * state.zoom;
   const { cx, cy } = drawOcean(ctx, size, size, radius);
   const view = { centerLat: state.centerLat, centerLon: state.centerLon, cx, cy };
+  const projector = makeGlobeProjector(view, radius);
 
   drawLand(ctx, state.land, view, radius);
   if (state.layers.graticule) drawGraticule(ctx, view, radius);
 
   const airborne = airborneFlights(state.flights, state.airportsByCode, state.simMin);
   if (state.layers.flights) {
-    drawFlightArcs(ctx, state.flights, state.airportsByCode, view, radius, state.selectedFlight?.id);
-    drawAirports(ctx, state.airports, view, radius);
+    drawFlightArcs(ctx, state.flights, state.airportsByCode, view, radius, state.selectedFlight?.id, projector);
+    drawAirports(ctx, state.airports, view, radius, projector);
   }
-  if (state.layers.quakes) drawQuakes(ctx, state.quakes, view, radius);
-  if (state.layers.sats) drawSatellites(ctx, state.satellites, state.simMin, view, radius);
+  if (state.layers.quakes) drawQuakes(ctx, state.quakes, view, radius, projector);
+  if (state.layers.sats) drawSatellites(ctx, state.satellites, state.simMin, view, radius, projector);
   if (state.layers.flights && state.liveFlights) drawLiveFlights(ctx, state.liveFlights, view, radius);
 
   // Planes on top, with screen positions saved for hit-testing.
@@ -95,7 +98,7 @@ function draw() {
       const screen = drawPlane(ctx, item.lat, item.lon, item.lift,
         (item.heading * 180) / Math.PI, view, radius,
         { color: state.selectedFlight?.id === item.flight.id ? '#f59e0b' : '#7dd3fc',
-          size: state.selectedFlight?.id === item.flight.id ? 9 : 7 });
+          size: state.selectedFlight?.id === item.flight.id ? 9 : 7, projector });
       planes.push({ ...item, screen });
     }
   }
@@ -130,6 +133,47 @@ function draw() {
       state.centerLon += ((cur.lon - state.centerLon + 540) % 360 - 180) * 0.08;
     }
   }
+}
+
+/** Flat-map mode: equirectangular view of the same layers (no night shading). */
+function drawFlat() {
+  const canvas = el('globe');
+  const ctx = canvas.getContext('2d');
+  const { size, dpr } = viewSize;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const w = size;
+  const h = size / 2;
+  const y0 = (size - h) / 2;
+  ctx.save();
+  ctx.translate(0, y0);
+  const projector = makeFlatProjector(w, h);
+  const view = { centerLat: 0, centerLon: 0, cx: w / 2, cy: h / 2 };
+  drawFlatMap(ctx, state.land, w, h, projector);
+  if (state.layers.graticule) drawFlatGraticule(ctx, w, h, projector);
+  const airborne = airborneFlights(state.flights, state.airportsByCode, state.simMin);
+  if (state.layers.flights) {
+    drawFlightArcs(ctx, state.flights, state.airportsByCode, view, 0, state.selectedFlight?.id, projector);
+    drawAirports(ctx, state.airports, view, 0, projector);
+  }
+  if (state.layers.quakes) drawQuakes(ctx, state.quakes, view, 0, projector);
+  if (state.layers.sats) drawSatellites(ctx, state.satellites, state.simMin, view, 0, projector);
+  const planes = [];
+  if (state.layers.flights) {
+    for (const item of airborne) {
+      const screen = drawPlane(ctx, item.lat, item.lon, item.lift,
+        (item.heading * 180) / Math.PI, view, 0,
+        { color: state.selectedFlight?.id === item.flight.id ? '#f59e0b' : '#7dd3fc',
+          size: state.selectedFlight?.id === item.flight.id ? 9 : 7, projector });
+      if (screen) planes.push({ ...item, screen: { x: screen.x, y: screen.y + y0, z: screen.z } });
+    }
+  }
+  state._planes = planes;
+  state._airborne = airborne;
+  drawMeasurement(ctx, state.measurement, view, 0);
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(0.5, y0 + 0.5, w - 1, h - 1);
 }
 
 function refreshSidebar() {
@@ -196,8 +240,10 @@ function wireControls() {
       const px = e.clientX - rect.left;
       const py = e.clientY - rect.top;
       if (state.measureMode) {
-        const ll = unproject(px, py, state.centerLat, state.centerLon,
-          viewSize.size * 0.42 * state.zoom, rect.width / 2, rect.height / 2);
+        const ll = state.mode === 'flat'
+          ? unprojectFlat(px, py - (viewSize.size / 4), viewSize.size, viewSize.size / 2)
+          : unproject(px, py, state.centerLat, state.centerLon,
+            viewSize.size * 0.42 * state.zoom, rect.width / 2, rect.height / 2);
         if (ll) {
           const done = measureClick(state.measurement, ll.lat, ll.lon);
           if (done) {
@@ -265,6 +311,12 @@ function wireControls() {
     a.download = `flightglobe-${formatTimeUTC(state.simMin).replace(':', '')}-utc.png`;
     a.href = el('globe').toDataURL('image/png');
     a.click();
+  });
+  el('flatBtn').addEventListener('click', (e) => {
+    state.mode = state.mode === 'flat' ? 'globe' : 'flat';
+    state.following = false;
+    e.currentTarget.classList.toggle('active', state.mode === 'flat');
+    e.currentTarget.textContent = state.mode === 'flat' ? 'Globe' : 'Flat map';
   });
   document.querySelectorAll('#presetBar [data-preset]').forEach((btn) => {
     btn.addEventListener('click', () => {
