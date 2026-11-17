@@ -248,7 +248,18 @@ def build():
     ]
     land = {"source": "FlightGlobe simplified coastline (hand-drawn, recognisable outlines)",
             "polygons": [[list(p) for p in poly] for poly in LAND.values()]}
-    (DATA / "airports.json").write_text(json.dumps(airports, indent=2) + "\n")
+    # Per-continent files: data/land/<name>.json + a manifest, so the app loads
+    # the coastline in parts and each continent is reviewable on its own.
+    land_dir = DATA / "land"
+    land_dir.mkdir(exist_ok=True)
+    manifest = []
+    for name, poly in LAND.items():
+        (land_dir / f"{name}.json").write_text(
+            json.dumps({"name": name, "polygons": [list(p) for p in poly]}, indent=2) + "\n")
+        manifest.append(f"land/{name}.json")
+    (land_dir / "manifest.json").write_text(
+        json.dumps({"files": manifest}, indent=2) + "\n")
+    (DATA / "land.json").write_text(json.dumps(land, indent=2) + "\n")
     (DATA / "flights.json").write_text(json.dumps(flights, indent=2) + "\n")
     (DATA / "earthquakes.json").write_text(json.dumps(quakes, indent=2) + "\n")
     (DATA / "satellites.json").write_text(json.dumps(sats, indent=2) + "\n")
