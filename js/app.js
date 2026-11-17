@@ -4,10 +4,13 @@ import { cleanDataset, loadBundledData, validateAirport, validateFlight, validat
 import { airborneFlights, flightDistanceKm } from './flights.js';
 import { fetchLiveData } from './live.js';
 import { drawGraticule, drawLand, drawLimb, drawNight, drawOcean } from './render.js';
-import { drawAirports, drawFlightArcs, drawPlane, drawQuakes, drawSatellites, hitTestPlanes } from './layers.js';
-import { advanceSimMinutes, formatTimeUTC, minutesOfDay } from './time.js';
+import { drawAirports, drawFlightArcs, drawLiveFlights, drawMeasurement, drawPlane, drawPulse, drawQuakes, drawSatellites, drawSunMarker, hitTestPlanes, hitTestQuakes } from './layers.js';
+import { advanceSimMinutes, formatTimeUTC, minutesOfDay, subsolarPoint } from './time.js';
+import { applyKey, isGlobeKey } from './keyboard.js';
+import { loadPrefs, mergePrefs, savePrefs } from './persist.js';
+import { clearMeasurement, measureClick, newMeasurement } from './measure.js';
 import {
-  el, renderFlightDetail, renderFlightList, renderLayerCounts, renderStats,
+  el, renderFlightDetail, renderFlightList, renderLayerCounts, renderMeasureResult, renderQuakeDetail, renderStats,
   renderTopStats, setClockText, setDataSourceLabel, setScrubTime,
   wireAirportSearch, wireLayerToggles,
 } from './ui.js';
@@ -25,6 +28,10 @@ const state = {
   layers: { flights: true, quakes: true, sats: true, night: true, graticule: false },
   selectedFlight: null,
   following: false,
+  autoRotate: false,
+  measureMode: false,
+  measurement: newMeasurement(),
+  pulse: null, // { lat, lon, startedAt } — airport search highlight
   airports: [],
   airportsByCode: new Map(),
   flights: [],
@@ -79,6 +86,7 @@ function draw() {
   }
   if (state.layers.quakes) drawQuakes(ctx, state.quakes, view, radius);
   if (state.layers.sats) drawSatellites(ctx, state.satellites, state.simMin, view, radius);
+  if (state.layers.flights && state.liveFlights) drawLiveFlights(ctx, state.liveFlights, view, radius);
 
   // Planes on top, with screen positions saved for hit-testing.
   const planes = [];
@@ -96,6 +104,23 @@ function draw() {
 
   if (state.layers.night) drawNight(ctx, simDate(), view, radius);
   drawLimb(ctx, cx, cy, radius);
+
+  // Sun marker + search pulse + measurement overlay sit above the shading.
+  if (state.layers.night) {
+    const sun = subsolarPoint(simDate());
+    drawSunMarker(ctx, sun.lat, sun.lon, view, radius);
+  }
+  if (state.pulse) {
+    const age = (performance.now() - state.pulse.startedAt) / 2000;
+    if (age > 3) state.pulse = null;
+    else drawPulse(ctx, state.pulse.lat, state.pulse.lon, view, radius, age);
+  }
+  drawMeasurement(ctx, state.measurement, view, radius);
+
+  // Auto-rotate slowly when enabled and the user is not dragging/following.
+  if (state.autoRotate && !state.dragging && !state.following) {
+    state.centerLon = ((state.centerLon + 0.03 + 540) % 360) - 180;
+  }
 
   // Follow mode: ease the camera centre onto the selected plane.
   if (state.following && state.selectedFlight) {
