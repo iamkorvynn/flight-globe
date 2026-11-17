@@ -21,6 +21,18 @@ The bundled flights are invented sample schedules on real routes between
 real airports. Live OpenSky positions appear as extra markers when the
 network is available.
 
+**What does the Flat map button do?**
+Switches the globe to an equirectangular flat map with the same layers —
+useful for seeing all routes at once. Night shading is globe-only.
+
+**What are the keyboard shortcuts?**
+Arrows rotate, +/− zoom, Space plays/pauses time, F toggles flat map,
+R resets the view, ? opens the shortcuts panel, Esc closes it.
+
+**How do I measure a distance?**
+Press the Measure button, then click two points on the globe. The
+great-circle distance shows in the detail panel.
+
 **Why is the coastline simplified?**
 The land outlines are hand-drawn and bundled in the repo so the app needs no
 map tiles. They're recognisable, not survey-grade.
