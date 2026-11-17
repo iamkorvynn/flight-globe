@@ -1,0 +1,443 @@
+[
+  {
+    "id": "SQ318",
+    "from": "SIN",
+    "to": "LHR",
+    "dep": "10:50",
+    "arr": "23:55",
+    "airline": "Singapore Airlines",
+    "aircraft": "Airbus A330-300"
+  },
+  {
+    "id": "SQ321",
+    "from": "LHR",
+    "to": "SIN",
+    "dep": "01:20",
+    "arr": "13:35",
+    "airline": "Singapore Airlines",
+    "aircraft": "Boeing 777-200LR"
+  },
+  {
+    "id": "EK215",
+    "from": "DXB",
+    "to": "LAX",
+    "dep": "08:15",
+    "arr": "21:40",
+    "airline": "Emirates",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "EK202",
+    "from": "JFK",
+    "to": "DXB",
+    "dep": "22:10",
+    "arr": "06:20",
+    "airline": "Emirates",
+    "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "BA117",
+    "from": "LHR",
+    "to": "JFK",
+    "dep": "09:00",
+    "arr": "17:00",
+    "airline": "British Airways",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "BA178",
+    "from": "JFK",
+    "to": "LHR",
+    "dep": "18:50",
+    "arr": "03:50",
+    "airline": "British Airways",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "JL44",
+    "from": "HND",
+    "to": "LHR",
+    "dep": "10:20",
+    "arr": "23:20",
+    "airline": "Japan Airlines",
+    "aircraft": "Boeing 777-200LR"
+  },
+  {
+    "id": "NH211",
+    "from": "HND",
+    "to": "LHR",
+    "dep": "12:00",
+    "arr": "01:00",
+    "airline": "ANA",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "QF1",
+    "from": "SYD",
+    "to": "SIN",
+    "dep": "16:00",
+    "arr": "23:40",
+    "airline": "Qantas",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "QF2",
+    "from": "SIN",
+    "to": "SYD",
+    "dep": "01:40",
+    "arr": "15:00",
+    "airline": "Qantas",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "AF66",
+    "from": "CDG",
+    "to": "JFK",
+    "dep": "10:20",
+    "arr": "18:20",
+    "airline": "Air France",
+    "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "AF7",
+    "from": "CDG",
+    "to": "JFK",
+    "dep": "13:20",
+    "arr": "21:20",
+    "airline": "Air France",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "LH401",
+    "from": "FRA",
+    "to": "JFK",
+    "dep": "10:00",
+    "arr": "18:00",
+    "airline": "Lufthansa",
+    "aircraft": "Airbus A330-300"
+  },
+  {
+    "id": "UA1",
+    "from": "SFO",
+    "to": "SIN",
+    "dep": "11:00",
+    "arr": "23:00",
+    "airline": "United",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "UA28",
+    "from": "SIN",
+    "to": "SFO",
+    "dep": "09:00",
+    "arr": "20:00",
+    "airline": "United",
+    "aircraft": "Airbus A330-300"
+  },
+  {
+    "id": "AI131",
+    "from": "LHR",
+    "to": "BOM",
+    "dep": "09:20",
+    "arr": "19:20",
+    "airline": "Air India",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "AI101",
+    "from": "DEL",
+    "to": "JFK",
+    "dep": "02:00",
+    "arr": "15:00",
+    "airline": "Air India",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "KE82",
+    "from": "ICN",
+    "to": "JFK",
+    "dep": "09:50",
+    "arr": "19:10",
+    "airline": "Korean Air",
+    "aircraft": "Airbus A330-300"
+  },
+  {
+    "id": "CA981",
+    "from": "PEK",
+    "to": "JFK",
+    "dep": "12:00",
+    "arr": "22:00",
+    "airline": "Air China",
+    "aircraft": "Boeing 777-200LR"
+  },
+  {
+    "id": "LA801",
+    "from": "GRU",
+    "to": "LHR",
+    "dep": "18:00",
+    "arr": "03:20",
+    "airline": "LATAM",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "LA807",
+    "from": "GRU",
+    "to": "MAD",
+    "dep": "17:00",
+    "arr": "02:00",
+    "airline": "LATAM",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "SA201",
+    "from": "JNB",
+    "to": "LHR",
+    "dep": "18:00",
+    "arr": "01:00",
+    "airline": "South African Airways",
+    "aircraft": "Boeing 747-8"
+  },
+  {
+    "id": "MS986",
+    "from": "CAI",
+    "to": "JFK",
+    "dep": "01:00",
+    "arr": "11:00",
+    "airline": "EgyptAir",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "AC1",
+    "from": "YYZ",
+    "to": "HND",
+    "dep": "13:00",
+    "arr": "23:00",
+    "airline": "Air Canada",
+    "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "AC856",
+    "from": "YYZ",
+    "to": "LHR",
+    "dep": "18:20",
+    "arr": "03:20",
+    "airline": "Air Canada",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "AM1",
+    "from": "MEX",
+    "to": "CDG",
+    "dep": "18:20",
+    "arr": "02:00",
+    "airline": "Aerom\u00e9xico",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "KL644",
+    "from": "AMS",
+    "to": "JFK",
+    "dep": "10:00",
+    "arr": "17:00",
+    "airline": "KLM",
+    "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "IB601",
+    "from": "MAD",
+    "to": "EZE",
+    "dep": "11:00",
+    "arr": "23:20",
+    "airline": "Iberia",
+    "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "TK1",
+    "from": "IST",
+    "to": "JFK",
+    "dep": "07:00",
+    "arr": "16:00",
+    "airline": "Turkish Airlines",
+    "aircraft": "Airbus A330-300"
+  },
+  {
+    "id": "QR701",
+    "from": "DOH",
+    "to": "JFK",
+    "dep": "08:00",
+    "arr": "18:00",
+    "airline": "Qatar Airways",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "CX252",
+    "from": "HKG",
+    "to": "LHR",
+    "dep": "11:40",
+    "arr": "00:00",
+    "airline": "Cathay Pacific",
+    "aircraft": "Boeing 747-8"
+  },
+  {
+    "id": "DL1",
+    "from": "ATL",
+    "to": "LHR",
+    "dep": "18:00",
+    "arr": "03:20",
+    "airline": "Delta",
+    "aircraft": "Boeing 747-8"
+  },
+  {
+    "id": "NZ1",
+    "from": "AKL",
+    "to": "LAX",
+    "dep": "18:00",
+    "arr": "06:00",
+    "airline": "Air New Zealand",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "TG911",
+    "from": "BKK",
+    "to": "LHR",
+    "dep": "12:00",
+    "arr": "02:00",
+    "airline": "Thai Airways",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "MH1",
+    "from": "KUL",
+    "to": "LHR",
+    "dep": "23:20",
+    "arr": "05:00",
+    "airline": "Malaysia Airlines",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "QF9",
+    "from": "MEL",
+    "to": "LHR",
+    "dep": "15:00",
+    "arr": "05:00",
+    "airline": "Qantas",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "LX8",
+    "from": "ZRH",
+    "to": "ORD",
+    "dep": "13:00",
+    "arr": "21:00",
+    "airline": "SWISS",
+    "aircraft": "Boeing 747-8"
+  },
+  {
+    "id": "SK901",
+    "from": "CPH",
+    "to": "ORD",
+    "dep": "16:00",
+    "arr": "23:00",
+    "airline": "SAS",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "OS65",
+    "from": "VIE",
+    "to": "JFK",
+    "dep": "10:00",
+    "arr": "18:00",
+    "airline": "Austrian",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "A3",
+    "from": "ATH",
+    "to": "JFK",
+    "dep": "15:00",
+    "arr": "23:00",
+    "airline": "\u2014",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "KQ100",
+    "from": "NBO",
+    "to": "LHR",
+    "dep": "20:00",
+    "arr": "03:20",
+    "airline": "Kenya Airways",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "TP201",
+    "from": "LIS",
+    "to": "JFK",
+    "dep": "16:00",
+    "arr": "23:00",
+    "airline": "TAP Air Portugal",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "AC4",
+    "from": "YVR",
+    "to": "LHR",
+    "dep": "17:00",
+    "arr": "01:40",
+    "airline": "Air Canada",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "LA800",
+    "from": "SCL",
+    "to": "GRU",
+    "dep": "15:00",
+    "arr": "19:00",
+    "airline": "LATAM",
+    "aircraft": "Boeing 777-200LR"
+  },
+  {
+    "id": "EK421",
+    "from": "DXB",
+    "to": "BOM",
+    "dep": "10:00",
+    "arr": "15:00",
+    "airline": "Emirates",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "SQ26",
+    "from": "SIN",
+    "to": "FRA",
+    "dep": "23:20",
+    "arr": "06:00",
+    "airline": "Singapore Airlines",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "EK225",
+    "from": "DXB",
+    "to": "SFO",
+    "dep": "09:00",
+    "arr": "21:00",
+    "airline": "Emirates",
+    "aircraft": "Boeing 777-200LR"
+  },
+  {
+    "id": "BA269",
+    "from": "LHR",
+    "to": "LAX",
+    "dep": "11:00",
+    "arr": "19:00",
+    "airline": "British Airways",
+    "aircraft": "Boeing 747-8"
+  },
+  {
+    "id": "QF63",
+    "from": "SYD",
+    "to": "JNB",
+    "dep": "11:00",
+    "arr": "20:00",
+    "airline": "Qantas",
+    "aircraft": "Boeing 787-9"
+  }
+]
