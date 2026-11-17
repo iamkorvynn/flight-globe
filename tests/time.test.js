@@ -1,7 +1,7 @@
 // Tests: time scrubber math, subsolar point and terminator.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { advanceSimMinutes, flightProgress, formatTimeUTC, isAirborne, isDaylight, minutesOfDay, subsolarPoint, sunDirection, terminatorPoints } from '../js/time.js';
+import { advanceSimMinutes, approxLocalTime, flightProgress, formatTimeUTC, isAirborne, isDaylight, minutesOfDay, subsolarPoint, sunDirection, terminatorPoints } from '../js/time.js';
 import { angularDistance } from '../js/math.js';
 
 test('formatTimeUTC wraps and pads', () => {
@@ -34,6 +34,18 @@ test('flightProgress: mid-flight is 0.5, outside returns null', () => {
 test('advanceSimMinutes wraps at 1440', () => {
   assert.equal(advanceSimMinutes(1400, 60, 1), 20);
   assert.equal(advanceSimMinutes(0, 10, 30), 300);
+});
+
+test('approxLocalTime shifts by longitude (4 min per degree)', () => {
+  // Noon UTC in London (~0°) is ~noon local.
+  assert.equal(approxLocalTime(720, 0), 720);
+  // Singapore (~104°E) is ~7h ahead of UTC.
+  assert.equal(approxLocalTime(720, 104), 720 + 416);
+  // New York (~-74°) is ~5h behind UTC.
+  assert.equal(approxLocalTime(720, -74), 720 - 296);
+  // Wraps past midnight both ways.
+  assert.equal(approxLocalTime(60, 180), 780);
+  assert.equal(approxLocalTime(60, -180), 780 - 720 + 720); // -660 -> 780
 });
 
 test('subsolarPoint: latitude stays within the tropics', () => {
