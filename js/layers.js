@@ -177,6 +177,21 @@ export function drawSunMarker(ctx, sunLat, sunLon, view, radius) {
   ctx.fill();
 }
 
+/** Hit-test: nearest satellite dot within `tolPx` of a screen point. */
+export function hitTestSatellites(satellites, nowMin, view, radius, px, py, tolPx = 14) {
+  const { centerLat, centerLon, cx, cy } = view;
+  let best = null;
+  let bestD = tolPx;
+  for (const s of satellites) {
+    const pos = satellitePosition(s, nowMin);
+    const p = project(pos.lat, pos.lon, centerLat, centerLon, radius * 1.12, cx, cy);
+    if (!p.visible) continue;
+    const d = Math.hypot(p.x - px, p.y - py);
+    if (d < bestD) { bestD = d; best = { satellite: s, screen: p }; }
+  }
+  return best;
+}
+
 /** Hit-test: nearest quake within `tolPx` of a screen point. */
 export function hitTestQuakes(quakes, view, radius, px, py, tolPx = 16) {
   const { centerLat, centerLon, cx, cy } = view;
