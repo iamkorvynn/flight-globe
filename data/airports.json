@@ -1,0 +1,282 @@
+[
+  {
+    "code": "SIN",
+    "name": "Singapore Changi",
+    "city": "Singapore",
+    "lat": 1.36,
+    "lon": 103.99
+  },
+  {
+    "code": "LHR",
+    "name": "London Heathrow",
+    "city": "London",
+    "lat": 51.47,
+    "lon": -0.45
+  },
+  {
+    "code": "JFK",
+    "name": "John F. Kennedy Intl",
+    "city": "New York",
+    "lat": 40.64,
+    "lon": -73.78
+  },
+  {
+    "code": "DXB",
+    "name": "Dubai Intl",
+    "city": "Dubai",
+    "lat": 25.25,
+    "lon": 55.36
+  },
+  {
+    "code": "HND",
+    "name": "Tokyo Haneda",
+    "city": "Tokyo",
+    "lat": 35.55,
+    "lon": 139.78
+  },
+  {
+    "code": "SYD",
+    "name": "Sydney Kingsford Smith",
+    "city": "Sydney",
+    "lat": -33.95,
+    "lon": 151.18
+  },
+  {
+    "code": "CDG",
+    "name": "Paris Charles de Gaulle",
+    "city": "Paris",
+    "lat": 49.01,
+    "lon": 2.55
+  },
+  {
+    "code": "FRA",
+    "name": "Frankfurt am Main",
+    "city": "Frankfurt",
+    "lat": 50.03,
+    "lon": 8.56
+  },
+  {
+    "code": "ORD",
+    "name": "Chicago O'Hare",
+    "city": "Chicago",
+    "lat": 41.97,
+    "lon": -87.91
+  },
+  {
+    "code": "LAX",
+    "name": "Los Angeles Intl",
+    "city": "Los Angeles",
+    "lat": 33.94,
+    "lon": -118.41
+  },
+  {
+    "code": "BOM",
+    "name": "Chhatrapati Shivaji Intl",
+    "city": "Mumbai",
+    "lat": 19.09,
+    "lon": 72.87
+  },
+  {
+    "code": "DEL",
+    "name": "Indira Gandhi Intl",
+    "city": "New Delhi",
+    "lat": 28.57,
+    "lon": 77.1
+  },
+  {
+    "code": "ICN",
+    "name": "Incheon Intl",
+    "city": "Seoul",
+    "lat": 37.46,
+    "lon": 126.44
+  },
+  {
+    "code": "PEK",
+    "name": "Beijing Capital Intl",
+    "city": "Beijing",
+    "lat": 40.08,
+    "lon": 116.58
+  },
+  {
+    "code": "GRU",
+    "name": "S\u00e3o Paulo\u2013Guarulhos",
+    "city": "S\u00e3o Paulo",
+    "lat": -23.44,
+    "lon": -46.47
+  },
+  {
+    "code": "JNB",
+    "name": "O.R. Tambo Intl",
+    "city": "Johannesburg",
+    "lat": -26.14,
+    "lon": 28.25
+  },
+  {
+    "code": "CAI",
+    "name": "Cairo Intl",
+    "city": "Cairo",
+    "lat": 30.12,
+    "lon": 31.41
+  },
+  {
+    "code": "YYZ",
+    "name": "Toronto Pearson",
+    "city": "Toronto",
+    "lat": 43.68,
+    "lon": -79.63
+  },
+  {
+    "code": "MEX",
+    "name": "Mexico City Intl",
+    "city": "Mexico City",
+    "lat": 19.44,
+    "lon": -99.07
+  },
+  {
+    "code": "AMS",
+    "name": "Amsterdam Schiphol",
+    "city": "Amsterdam",
+    "lat": 52.31,
+    "lon": 4.76
+  },
+  {
+    "code": "MAD",
+    "name": "Adolfo Su\u00e1rez Madrid\u2013Barajas",
+    "city": "Madrid",
+    "lat": 40.5,
+    "lon": -3.57
+  },
+  {
+    "code": "IST",
+    "name": "Istanbul Airport",
+    "city": "Istanbul",
+    "lat": 41.28,
+    "lon": 28.74
+  },
+  {
+    "code": "DOH",
+    "name": "Hamad Intl",
+    "city": "Doha",
+    "lat": 25.27,
+    "lon": 51.61
+  },
+  {
+    "code": "HKG",
+    "name": "Hong Kong Intl",
+    "city": "Hong Kong",
+    "lat": 22.31,
+    "lon": 113.91
+  },
+  {
+    "code": "SFO",
+    "name": "San Francisco Intl",
+    "city": "San Francisco",
+    "lat": 37.62,
+    "lon": -122.38
+  },
+  {
+    "code": "ATL",
+    "name": "Hartsfield\u2013Jackson Atlanta",
+    "city": "Atlanta",
+    "lat": 33.64,
+    "lon": -84.43
+  },
+  {
+    "code": "EZE",
+    "name": "Ministro Pistarini Intl",
+    "city": "Buenos Aires",
+    "lat": -34.82,
+    "lon": -58.54
+  },
+  {
+    "code": "AKL",
+    "name": "Auckland Airport",
+    "city": "Auckland",
+    "lat": -37.01,
+    "lon": 174.79
+  },
+  {
+    "code": "NRT",
+    "name": "Narita Intl",
+    "city": "Tokyo",
+    "lat": 35.77,
+    "lon": 140.39
+  },
+  {
+    "code": "BKK",
+    "name": "Suvarnabhumi",
+    "city": "Bangkok",
+    "lat": 13.69,
+    "lon": 100.75
+  },
+  {
+    "code": "KUL",
+    "name": "Kuala Lumpur Intl",
+    "city": "Kuala Lumpur",
+    "lat": 2.75,
+    "lon": 101.71
+  },
+  {
+    "code": "MEL",
+    "name": "Melbourne Airport",
+    "city": "Melbourne",
+    "lat": -37.67,
+    "lon": 144.84
+  },
+  {
+    "code": "ZRH",
+    "name": "Zurich Airport",
+    "city": "Zurich",
+    "lat": 47.46,
+    "lon": 8.55
+  },
+  {
+    "code": "CPH",
+    "name": "Copenhagen Airport",
+    "city": "Copenhagen",
+    "lat": 55.62,
+    "lon": 12.66
+  },
+  {
+    "code": "VIE",
+    "name": "Vienna Intl",
+    "city": "Vienna",
+    "lat": 48.11,
+    "lon": 16.57
+  },
+  {
+    "code": "ATH",
+    "name": "Athens Intl",
+    "city": "Athens",
+    "lat": 37.94,
+    "lon": 23.94
+  },
+  {
+    "code": "NBO",
+    "name": "Jomo Kenyatta Intl",
+    "city": "Nairobi",
+    "lat": -1.32,
+    "lon": 36.93
+  },
+  {
+    "code": "LIS",
+    "name": "Lisbon Humberto Delgado",
+    "city": "Lisbon",
+    "lat": 38.77,
+    "lon": -9.13
+  },
+  {
+    "code": "YVR",
+    "name": "Vancouver Intl",
+    "city": "Vancouver",
+    "lat": 49.2,
+    "lon": -123.18
+  },
+  {
+    "code": "SCL",
+    "name": "Santiago Intl",
+    "city": "Santiago",
+    "lat": -33.39,
+    "lon": -70.79
+  }
+]
