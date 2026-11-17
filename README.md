@@ -1,7 +1,7 @@
 # FlightGlobe
 
 ![CI](https://github.com/iamkorvynn/flight-globe/actions/workflows/ci.yml/badge.svg)
-![Tests](https://img.shields.io/badge/tests-88%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-94%20passing-brightgreen)
 ![Deps](https://img.shields.io/badge/dependencies-0-blue)
 
 **One screen. The whole planet, moving.**
@@ -23,10 +23,10 @@ pulls live data from free public APIs when the network is available.
 - **Globe** — orthographic projection on canvas, drag-to-rotate, zoom, and a
   bundled simplified world coastline dataset (`data/land.json`, 14 polygons).
   No map tiles are fetched at runtime.
-- **Flights layer** — great-circle arcs between 50 airports, 61 sample
+- **Flights layer** — great-circle arcs between 50 airports, 67 sample
   flights, moving plane markers, airport dots. Click a plane (or a row in the
   sidebar list) for route, distance, duration and aircraft.
-- **Earthquakes layer** — 30 sample quakes, markers sized and coloured by
+- **Earthquakes layer** — 40 sample quakes, markers sized and coloured by
   magnitude, strongest-quake stat in the sidebar.
 - **Satellites layer** — 16 satellites (ISS, Starlink, NOAA-20, Hubble,
   Tiangong, GPS, GOES-16…) on orbit rings with moving dots.
