@@ -21,7 +21,12 @@ const REQUIRED = [
   'tests/flights.test.js', 'tests/satellites.test.js', 'tests/quakes.test.js',
   'tests/render.test.js', 'tests/keyboard.test.js', 'tests/persist.test.js', 'tests/measure.test.js',
   'data/airports.json', 'data/flights.json', 'data/earthquakes.json',
-  'data/satellites.json', 'data/land.json',
+  'data/satellites.json', 'data/land/manifest.json',
+  'data/land/north_america.json', 'data/land/south_america.json', 'data/land/africa.json',
+  'data/land/europe.json', 'data/land/asia.json', 'data/land/australia.json',
+  'data/land/greenland.json', 'data/land/antarctica.json', 'data/land/japan.json',
+  'data/land/united_kingdom.json', 'data/land/madagascar.json', 'data/land/new_zealand.json',
+  'data/land/indonesia.json', 'data/land/borneo.json',
   'package.json', 'README.md', 'LICENSE', 'CHANGELOG.md',
 ];
 
