@@ -300,7 +300,6 @@ def build():
     (DATA / "flights.json").write_text(json.dumps(flights, indent=2) + "\n")
     (DATA / "earthquakes.json").write_text(json.dumps(quakes, indent=2) + "\n")
     (DATA / "satellites.json").write_text(json.dumps(sats, indent=2) + "\n")
-    (DATA / "land.json").write_text(json.dumps(land, indent=2) + "\n")
     print(f"airports={len(airports)} flights={len(flights)} quakes={len(quakes)} "
           f"sats={len(sats)} land_polygons={len(land['polygons'])}")
 
