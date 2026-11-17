@@ -13,7 +13,7 @@ import { nextDepartures, busiestAirport } from './departures.js';
 import {
   el, renderAirportDetail, renderDepartures, renderFlightDetail, renderFlightList, renderLayerCounts, renderMeasureResult, renderQuakeDetail, renderQuakeList, renderSatelliteDetail, renderStats,
   renderTopStats, setClockText, setDataSourceLabel, setScrubTime,
-  wireAirportSearch, wireLayerToggles,
+  wireAirportSearch, wireFlightSearch, wireLayerToggles,
 } from './ui.js';
 
 const SIM_DATE = new Date(Date.UTC(2026, 10, 18, 12, 0, 0)); // 18 Nov 2026
@@ -427,6 +427,15 @@ async function init() {
     state.centerLon = a.lon;
     state.following = false;
     state.pulse = { lat: a.lat, lon: a.lon, startedAt: performance.now() };
+  });
+  wireFlightSearch(state.flights, (f) => {
+    selectFlight(f);
+    const pos = state._airborne?.find((a) => a.flight.id === f.id);
+    if (pos) {
+      state.centerLat = pos.lat;
+      state.centerLon = pos.lon;
+      state.following = false;
+    }
   });
   setDataSourceLabel('Bundled sample data', false);
 
