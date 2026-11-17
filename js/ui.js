@@ -1,7 +1,7 @@
 // FlightGlobe — sidebar UI: search, flight list, detail panel, stats.
 import { formatDuration, formatKm, minutesBetween } from './geo.js';
 import { flightDistanceKm, flightDurationMin } from './flights.js';
-import { formatTimeUTC, flightProgress } from './time.js';
+import { formatTimeUTC, flightProgress, approxLocalTime } from './time.js';
 import { quakeSeverity, strongestQuake } from './quakes.js';
 
 export function el(id) { return document.getElementById(id); }
@@ -64,6 +64,37 @@ export function renderQuakeList(quakes, onPick) {
     li.addEventListener('click', () => onPick(q));
     ul.appendChild(li);
   }
+}
+
+/** Render the departures board: next flights out after the scrubbed time. */
+export function renderDepartures(next, onPick) {
+  const ul = el('departuresList');
+  if (!ul) return;
+  ul.innerHTML = '';
+  for (const { flight, inMin } of next) {
+    const li = document.createElement('li');
+    const when = inMin === 0 ? 'now' : inMin < 60 ? `in ${inMin}m` : `in ${Math.floor(inMin / 60)}h ${inMin % 60}m`;
+    li.innerHTML = `<span class="code">${flight.id}</span>
+      <span class="route">${flight.from} → ${flight.to} · dep ${flight.dep} UTC</span>
+      <span>${when}</span>`;
+    li.addEventListener('click', () => onPick(flight));
+    ul.appendChild(li);
+  }
+  if (!next.length) ul.innerHTML = '<li class="muted">No departures scheduled.</li>';
+}
+
+/** Show a clicked airport in the detail panel, with approx local time. */
+export function renderAirportDetail(airport, nowMin, departuresFromHere) {
+  if (!airport) return;
+  el('detailTitle').textContent = `Airport · ${airport.code}`;
+  const local = formatTimeUTC(approxLocalTime(nowMin, airport.lon));
+  el('detailBody').innerHTML = `
+    <p class="big">${airport.city}</p>
+    <p>${airport.name} (${airport.code})</p>
+    <p>Location <b>${airport.lat.toFixed(2)}°, ${airport.lon.toFixed(2)}°</b></p>
+    <p>Local time ≈ <b>${local}</b> (UTC ${formatTimeUTC(nowMin)}) — approximate, from longitude</p>
+    <p class="muted">${departuresFromHere} sample flight(s) depart from here today.</p>`;
+  el('followBar').hidden = true;
 }
 
 /** Render the flight detail panel. */
