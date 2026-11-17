@@ -439,5 +439,113 @@
     "arr": "20:00",
     "airline": "Qantas",
     "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "AA100",
+    "from": "DFW",
+    "to": "LHR",
+    "dep": "17:00",
+    "arr": "04:00",
+    "airline": "American Airlines",
+    "aircraft": "Boeing 747-8"
+  },
+  {
+    "id": "UA1200",
+    "from": "DEN",
+    "to": "FRA",
+    "dep": "18:00",
+    "arr": "04:00",
+    "airline": "United",
+    "aircraft": "Airbus A380-800"
+  },
+  {
+    "id": "AS1",
+    "from": "SEA",
+    "to": "HND",
+    "dep": "14:00",
+    "arr": "22:00",
+    "airline": "Alaska Airlines",
+    "aircraft": "Boeing 777-200LR"
+  },
+  {
+    "id": "AA900",
+    "from": "MIA",
+    "to": "MAD",
+    "dep": "19:00",
+    "arr": "02:00",
+    "airline": "American Airlines",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "BA212",
+    "from": "BOS",
+    "to": "LHR",
+    "dep": "19:00",
+    "arr": "03:40",
+    "airline": "British Airways",
+    "aircraft": "Boeing 777-200LR"
+  },
+  {
+    "id": "UA918",
+    "from": "IAD",
+    "to": "FRA",
+    "dep": "18:00",
+    "arr": "03:00",
+    "airline": "United",
+    "aircraft": "Airbus A350-900"
+  },
+  {
+    "id": "HA1",
+    "from": "HNL",
+    "to": "HND",
+    "dep": "12:00",
+    "arr": "20:00",
+    "airline": "Hawaiian Airlines",
+    "aircraft": "Boeing 777-200LR"
+  },
+  {
+    "id": "EI101",
+    "from": "DUB",
+    "to": "JFK",
+    "dep": "14:00",
+    "arr": "20:00",
+    "airline": "Aer Lingus",
+    "aircraft": "Airbus A330-300"
+  },
+  {
+    "id": "LO1",
+    "from": "WAW",
+    "to": "ORD",
+    "dep": "12:00",
+    "arr": "19:00",
+    "airline": "LOT Polish Airlines",
+    "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "AY101",
+    "from": "HEL",
+    "to": "JFK",
+    "dep": "15:00",
+    "arr": "21:00",
+    "airline": "Finnair",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "AA101",
+    "from": "LHR",
+    "to": "DFW",
+    "dep": "10:00",
+    "arr": "18:00",
+    "airline": "American Airlines",
+    "aircraft": "Boeing 777-300ER"
+  },
+  {
+    "id": "UA901",
+    "from": "FRA",
+    "to": "DEN",
+    "dep": "11:00",
+    "arr": "18:00",
+    "airline": "United",
+    "aircraft": "Airbus A330-300"
   }
 ]
