@@ -97,3 +97,12 @@ export function terminatorPoints(date, count = 128) {
 export function advanceSimMinutes(simMin, realSeconds, speed) {
   return (simMin + realSeconds * speed) % 1440;
 }
+
+/**
+ * Approximate local time at a longitude: UTC + lon/15 hours.
+ * A rough estimate (ignores time-zone borders and DST) — labelled as such
+ * wherever it is shown.
+ */
+export function approxLocalTime(utcMin, lon) {
+  return (((utcMin + lon * 4) % 1440) + 1440) % 1440;
+}
