@@ -17,7 +17,10 @@ const CHECKS = [
   '/css/base.css', '/css/globe.css', '/css/panel.css', '/css/controls.css', '/css/responsive.css',
   '/css/toolbar.css', '/public/favicon.svg',
   '/data/airports.json', '/data/flights.json', '/data/earthquakes.json',
-  '/data/satellites.json', '/data/land.json',
+  '/data/satellites.json', '/data/land/manifest.json',
+  '/data/land/north_america.json', '/data/land/south_america.json', '/data/land/africa.json',
+  '/data/land/europe.json', '/data/land/asia.json', '/data/land/australia.json',
+  '/data/land/greenland.json', '/data/land/antarctica.json',
 ];
 
 const server = spawn('node', ['scripts/serve.mjs'], {
