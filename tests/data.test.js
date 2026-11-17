@@ -46,8 +46,15 @@ test('bundled satellites: 12 valid rows', async () => {
   assert.equal(dropped, 0);
 });
 
-test('bundled land: polygons valid, all points in range', async () => {
-  const land = await load('land');
+test('bundled land: per-continent parts merge into valid polygons', async () => {
+  const manifest = JSON.parse(await readFile(`${ROOT}/data/land/manifest.json`, 'utf8'));
+  assert.ok(Array.isArray(manifest.files) && manifest.files.length >= 10);
+  const parts = [];
+  for (const f of manifest.files) {
+    parts.push(JSON.parse(await readFile(`${ROOT}/data/${f}`, 'utf8')));
+  }
+  const { mergeLandParts } = await import('../js/data.js');
+  const land = mergeLandParts(parts);
   assert.ok(validateLand(land));
   assert.ok(land.polygons.length >= 10);
 });
