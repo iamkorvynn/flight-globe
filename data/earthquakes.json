@@ -3,270 +3,360 @@
     "id": "q01",
     "lat": 38.3,
     "lon": 142.4,
-    "mag": 6.7,
+    "mag": 5.6,
     "place": "Off the coast of Honshu, Japan",
-    "depthKm": 51,
-    "time": "2026-11-18T20:42:00Z"
+    "depthKm": 27,
+    "time": "2026-11-18T23:17:00Z"
   },
   {
     "id": "q02",
     "lat": 37.8,
     "lon": -122.4,
-    "mag": 3.3,
+    "mag": 5.7,
     "place": "San Francisco Bay Area, California",
-    "depthKm": 103,
-    "time": "2026-11-18T21:44:00Z"
+    "depthKm": 51,
+    "time": "2026-11-17T23:12:00Z"
   },
   {
     "id": "q03",
     "lat": -3.3,
     "lon": 128.1,
-    "mag": 4.1,
+    "mag": 6.3,
     "place": "Banda Sea, Indonesia",
-    "depthKm": 88,
-    "time": "2026-11-17T23:12:00Z"
+    "depthKm": 43,
+    "time": "2026-11-18T15:56:00Z"
   },
   {
     "id": "q04",
     "lat": -20.3,
     "lon": -70.9,
-    "mag": 6.3,
+    "mag": 7.0,
     "place": "Offshore Tarapac\u00e1, Chile",
-    "depthKm": 43,
-    "time": "2026-11-18T15:56:00Z"
+    "depthKm": 26,
+    "time": "2026-11-17T02:58:00Z"
   },
   {
     "id": "q05",
     "lat": 36.2,
     "lon": 33.4,
-    "mag": 7.0,
+    "mag": 6.0,
     "place": "Eastern Mediterranean Sea",
-    "depthKm": 26,
-    "time": "2026-11-17T02:58:00Z"
+    "depthKm": 38,
+    "time": "2026-11-18T14:26:00Z"
   },
   {
     "id": "q06",
     "lat": -6.1,
     "lon": 105.4,
-    "mag": 6.0,
+    "mag": 5.1,
     "place": "Sunda Strait, Indonesia",
-    "depthKm": 38,
-    "time": "2026-11-18T14:26:00Z"
+    "depthKm": 43,
+    "time": "2026-11-18T02:32:00Z"
   },
   {
     "id": "q07",
     "lat": 60.9,
     "lon": -147.3,
-    "mag": 5.1,
+    "mag": 3.5,
     "place": "Southern Alaska",
-    "depthKm": 43,
-    "time": "2026-11-18T02:32:00Z"
+    "depthKm": 15,
+    "time": "2026-11-18T01:06:00Z"
   },
   {
     "id": "q08",
     "lat": -17.9,
     "lon": -178.5,
-    "mag": 3.5,
+    "mag": 4.8,
     "place": "Fiji region",
-    "depthKm": 15,
-    "time": "2026-11-18T01:06:00Z"
+    "depthKm": 89,
+    "time": "2026-11-18T12:47:00Z"
   },
   {
     "id": "q09",
     "lat": 28.4,
     "lon": 84.7,
-    "mag": 4.8,
+    "mag": 5.8,
     "place": "Gandaki, Nepal",
-    "depthKm": 89,
-    "time": "2026-11-18T12:47:00Z"
+    "depthKm": 103,
+    "time": "2026-11-17T03:51:00Z"
   },
   {
     "id": "q10",
     "lat": 39.1,
     "lon": 29.9,
-    "mag": 5.8,
+    "mag": 6.4,
     "place": "Western T\u00fcrkiye",
-    "depthKm": 103,
-    "time": "2026-11-17T03:51:00Z"
+    "depthKm": 29,
+    "time": "2026-11-17T17:02:00Z"
   },
   {
     "id": "q11",
     "lat": -9.9,
     "lon": 160.0,
-    "mag": 6.4,
+    "mag": 6.9,
     "place": "Solomon Islands",
-    "depthKm": 29,
-    "time": "2026-11-17T17:02:00Z"
+    "depthKm": 15,
+    "time": "2026-11-17T04:11:00Z"
   },
   {
     "id": "q12",
     "lat": 41.8,
     "lon": 44.8,
-    "mag": 6.9,
+    "mag": 4.7,
     "place": "Georgia (Sakartvelo)",
-    "depthKm": 15,
-    "time": "2026-11-17T04:11:00Z"
+    "depthKm": 26,
+    "time": "2026-11-18T23:25:00Z"
   },
   {
     "id": "q13",
     "lat": -0.8,
     "lon": -80.9,
-    "mag": 4.7,
+    "mag": 4.0,
     "place": "Near the coast of Ecuador",
-    "depthKm": 26,
-    "time": "2026-11-18T23:25:00Z"
+    "depthKm": 112,
+    "time": "2026-11-18T05:22:00Z"
   },
   {
     "id": "q14",
     "lat": 52.5,
     "lon": 159.9,
-    "mag": 4.0,
+    "mag": 5.8,
     "place": "Kamchatka, Russia",
-    "depthKm": 112,
-    "time": "2026-11-18T05:22:00Z"
+    "depthKm": 61,
+    "time": "2026-11-17T10:37:00Z"
   },
   {
     "id": "q15",
     "lat": 14.6,
     "lon": -92.4,
-    "mag": 5.8,
+    "mag": 5.6,
     "place": "Offshore Chiapas, Mexico",
-    "depthKm": 61,
-    "time": "2026-11-17T10:37:00Z"
+    "depthKm": 67,
+    "time": "2026-11-17T22:22:00Z"
   },
   {
     "id": "q16",
     "lat": 35.7,
     "lon": 140.1,
-    "mag": 5.6,
+    "mag": 3.3,
     "place": "Chiba, Japan",
-    "depthKm": 67,
-    "time": "2026-11-17T22:22:00Z"
+    "depthKm": 25,
+    "time": "2026-11-17T13:17:00Z"
   },
   {
     "id": "q17",
     "lat": -31.6,
     "lon": -71.2,
-    "mag": 3.3,
+    "mag": 5.9,
     "place": "Coquimbo, Chile",
-    "depthKm": 25,
-    "time": "2026-11-17T13:17:00Z"
+    "depthKm": 114,
+    "time": "2026-11-18T19:40:00Z"
   },
   {
     "id": "q18",
     "lat": 7.2,
     "lon": 126.6,
-    "mag": 5.9,
+    "mag": 4.8,
     "place": "Mindanao, Philippines",
     "depthKm": 114,
-    "time": "2026-11-18T19:40:00Z"
+    "time": "2026-11-17T11:35:00Z"
   },
   {
     "id": "q19",
     "lat": 23.8,
     "lon": 121.7,
-    "mag": 4.8,
+    "mag": 6.4,
     "place": "Taiwan region",
-    "depthKm": 114,
-    "time": "2026-11-17T11:35:00Z"
+    "depthKm": 97,
+    "time": "2026-11-17T13:17:00Z"
   },
   {
     "id": "q20",
     "lat": -5.6,
     "lon": 148.2,
-    "mag": 6.4,
+    "mag": 3.8,
     "place": "Papua New Guinea",
-    "depthKm": 97,
-    "time": "2026-11-17T13:17:00Z"
+    "depthKm": 86,
+    "time": "2026-11-17T12:50:00Z"
   },
   {
     "id": "q21",
     "lat": 30.1,
     "lon": 101.9,
-    "mag": 3.8,
+    "mag": 4.0,
     "place": "Sichuan, China",
-    "depthKm": 86,
-    "time": "2026-11-17T12:50:00Z"
+    "depthKm": 77,
+    "time": "2026-11-18T21:42:00Z"
   },
   {
     "id": "q22",
     "lat": 64.8,
     "lon": -21.1,
-    "mag": 4.0,
+    "mag": 6.5,
     "place": "Iceland region",
-    "depthKm": 77,
-    "time": "2026-11-18T21:42:00Z"
+    "depthKm": 10,
+    "time": "2026-11-17T15:42:00Z"
   },
   {
     "id": "q23",
     "lat": -42.9,
     "lon": 172.7,
-    "mag": 6.5,
+    "mag": 3.6,
     "place": "Canterbury, New Zealand",
-    "depthKm": 10,
-    "time": "2026-11-17T15:42:00Z"
+    "depthKm": 28,
+    "time": "2026-11-18T06:37:00Z"
   },
   {
     "id": "q24",
     "lat": 18.9,
     "lon": -155.7,
-    "mag": 3.6,
+    "mag": 5.9,
     "place": "Hawaii, USA",
-    "depthKm": 28,
-    "time": "2026-11-18T06:37:00Z"
+    "depthKm": 75,
+    "time": "2026-11-17T03:47:00Z"
   },
   {
     "id": "q25",
     "lat": 44.1,
     "lon": 7.9,
-    "mag": 5.9,
+    "mag": 4.4,
     "place": "Ligurian Sea, Italy",
-    "depthKm": 75,
-    "time": "2026-11-17T03:47:00Z"
+    "depthKm": 84,
+    "time": "2026-11-18T13:34:00Z"
   },
   {
     "id": "q26",
     "lat": 34.5,
     "lon": -120.1,
-    "mag": 4.4,
+    "mag": 3.7,
     "place": "California, USA",
-    "depthKm": 84,
-    "time": "2026-11-18T13:34:00Z"
+    "depthKm": 90,
+    "time": "2026-11-18T15:18:00Z"
   },
   {
     "id": "q27",
     "lat": -15.9,
     "lon": -172.9,
-    "mag": 3.7,
+    "mag": 4.9,
     "place": "Samoa region",
-    "depthKm": 90,
-    "time": "2026-11-18T15:18:00Z"
+    "depthKm": 28,
+    "time": "2026-11-18T05:24:00Z"
   },
   {
     "id": "q28",
     "lat": 56.5,
     "lon": -153.9,
-    "mag": 4.9,
+    "mag": 6.6,
     "place": "Kodiak, Alaska",
-    "depthKm": 28,
-    "time": "2026-11-18T05:24:00Z"
+    "depthKm": 84,
+    "time": "2026-11-18T19:47:00Z"
   },
   {
     "id": "q29",
     "lat": 13.1,
     "lon": 43.4,
-    "mag": 6.6,
+    "mag": 6.2,
     "place": "Gulf of Aden",
-    "depthKm": 84,
-    "time": "2026-11-18T19:47:00Z"
+    "depthKm": 48,
+    "time": "2026-11-17T10:50:00Z"
   },
   {
     "id": "q30",
     "lat": 29.5,
     "lon": 51.5,
-    "mag": 6.2,
+    "mag": 4.1,
     "place": "Southern Iran",
-    "depthKm": 48,
-    "time": "2026-11-17T10:50:00Z"
+    "depthKm": 29,
+    "time": "2026-11-18T03:42:00Z"
+  },
+  {
+    "id": "q31",
+    "lat": 41.2,
+    "lon": 73.8,
+    "mag": 4.4,
+    "place": "Kyrgyzstan",
+    "depthKm": 88,
+    "time": "2026-11-17T23:34:00Z"
+  },
+  {
+    "id": "q32",
+    "lat": -6.9,
+    "lon": 110.6,
+    "mag": 4.1,
+    "place": "Java, Indonesia",
+    "depthKm": 17,
+    "time": "2026-11-17T07:04:00Z"
+  },
+  {
+    "id": "q33",
+    "lat": 55.7,
+    "lon": -3.2,
+    "mag": 5.4,
+    "place": "North Sea",
+    "depthKm": 71,
+    "time": "2026-11-18T07:04:00Z"
+  },
+  {
+    "id": "q34",
+    "lat": 19.4,
+    "lon": -155.3,
+    "mag": 2.6,
+    "place": "Hawaii, USA",
+    "depthKm": 96,
+    "time": "2026-11-17T01:05:00Z"
+  },
+  {
+    "id": "q35",
+    "lat": 37.1,
+    "lon": 36.8,
+    "mag": 6.7,
+    "place": "Southern T\u00fcrkiye",
+    "depthKm": 115,
+    "time": "2026-11-18T00:02:00Z"
+  },
+  {
+    "id": "q36",
+    "lat": -23.5,
+    "lon": -46.6,
+    "mag": 3.5,
+    "place": "S\u00e3o Paulo, Brazil",
+    "depthKm": 87,
+    "time": "2026-11-17T00:09:00Z"
+  },
+  {
+    "id": "q37",
+    "lat": 31.5,
+    "lon": 130.2,
+    "mag": 6.2,
+    "place": "Kyushu, Japan",
+    "depthKm": 100,
+    "time": "2026-11-18T23:18:00Z"
+  },
+  {
+    "id": "q38",
+    "lat": -33.0,
+    "lon": 71.6,
+    "mag": 6.8,
+    "place": "Valpara\u00edso, Chile",
+    "depthKm": 18,
+    "time": "2026-11-18T23:09:00Z"
+  },
+  {
+    "id": "q39",
+    "lat": 43.0,
+    "lon": 12.5,
+    "mag": 6.8,
+    "place": "Umbria, Italy",
+    "depthKm": 35,
+    "time": "2026-11-17T11:32:00Z"
+  },
+  {
+    "id": "q40",
+    "lat": 27.9,
+    "lon": 85.3,
+    "mag": 5.9,
+    "place": "Bagmati, Nepal",
+    "depthKm": 82,
+    "time": "2026-11-18T14:43:00Z"
   }
 ]
