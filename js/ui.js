@@ -1,7 +1,7 @@
 // FlightGlobe — sidebar UI: search, flight list, detail panel, stats.
 import { formatDuration, formatKm, minutesBetween } from './geo.js';
 import { flightDistanceKm, flightDurationMin } from './flights.js';
-import { formatTimeUTC } from './time.js';
+import { formatTimeUTC, flightProgress } from './time.js';
 import { quakeSeverity, strongestQuake } from './quakes.js';
 
 export function el(id) { return document.getElementById(id); }
@@ -22,11 +22,12 @@ export function renderLayerCounts({ flights, quakes, sats }) {
 }
 
 /** Render layer stats (definition list). */
-export function renderStats({ airborne, totalFlights, quakes, sats, longest }) {
+export function renderStats({ airborne, totalFlights, quakes, sats, longest, busiest }) {
   const strong = strongestQuake(quakes);
   el('statsList').innerHTML = `
     <dt>Flights airborne now</dt><dd>${airborne} / ${totalFlights}</dd>
     <dt>Longest route in the air</dt><dd>${longest ? `${longest.flight.from} → ${longest.flight.to} · ${formatKm(longest.km)}` : '—'}</dd>
+    <dt>Busiest airport (sample day)</dt><dd>${busiest ? `${busiest.code} · ${busiest.count} flights` : '—'}</dd>
     <dt>Earthquakes (sample, 24h)</dt><dd>${quakes.length}</dd>
     <dt>Strongest quake</dt><dd>${strong ? `M${strong.mag.toFixed(1)} · ${quakeSeverity(strong.mag)} · ${strong.place}` : '—'}</dd>
     <dt>Satellites tracked</dt><dd>${sats}</dd>`;
@@ -79,12 +80,21 @@ export function renderFlightDetail(flight, airportsByCode, nowMin) {
   const b = airportsByCode.get(flight.to);
   const km = flightDistanceKm(flight, airportsByCode);
   const dur = flightDurationMin(flight);
+  // Progress along the route right now (0–100%).
+  const [dh, dm] = flight.dep.split(':').map(Number);
+  const [ah, am] = flight.arr.split(':').map(Number);
+  const prog = flightProgress(dh * 60 + dm, ah * 60 + am, nowMin);
+  const progBar = prog === null
+    ? '<p class="muted">Not airborne at the scrubbed time — drag the timeline into its window.</p>'
+    : `<p>Progress <b>${Math.round(prog * 100)}%</b></p>
+       <div class="progbar"><div style="width:${Math.round(prog * 100)}%"></div></div>`;
   el('detailTitle').textContent = `${flight.id} · ${flight.from} → ${flight.to}`;
   body.innerHTML = `
     <p class="big">${a ? a.city : flight.from} → ${b ? b.city : flight.to}</p>
     <p>${a ? `${a.name} (${a.code})` : ''} → ${b ? `${b.name} (${b.code})` : ''}</p>
     <p>Distance <b>${km ? formatKm(km) : '—'}</b> · Duration <b>${formatDuration(dur)}</b></p>
     <p>Departs <b>${flight.dep} UTC</b> · Arrives <b>${flight.arr} UTC</b> · Now <b>${formatTimeUTC(nowMin)} UTC</b></p>
+    ${progBar}
     <p class="muted">Aircraft: ${flight.aircraft ?? '—'} · Airline: ${flight.airline ?? '—'}</p>`;
   followBar.hidden = false;
 }
