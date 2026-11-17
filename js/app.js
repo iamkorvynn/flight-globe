@@ -355,6 +355,9 @@ function wireControls() {
     e.currentTarget.classList.toggle('active', state.mode === 'flat');
     e.currentTarget.textContent = state.mode === 'flat' ? 'Globe' : 'Flat map';
   });
+  el('shortcutsCloseBtn').addEventListener('click', () => {
+    el('shortcuts').hidden = true;
+  });
   document.querySelectorAll('#presetBar [data-preset]').forEach((btn) => {
     btn.addEventListener('click', () => {
       state.simMin = Number(btn.dataset.preset);
@@ -376,6 +379,22 @@ function wireControls() {
       e.preventDefault();
       state.playing = !state.playing;
       el('playBtn').textContent = state.playing ? '⏸' : '▶';
+      return;
+    }
+    if (e.key === '?') {
+      el('shortcuts').hidden = !el('shortcuts').hidden;
+      return;
+    }
+    if (e.key === 'f' || e.key === 'F') {
+      el('flatBtn').click();
+      return;
+    }
+    if (e.key === 'r' || e.key === 'R') {
+      el('resetViewBtn').click();
+      return;
+    }
+    if (e.key === 'Escape') {
+      el('shortcuts').hidden = true;
       return;
     }
     if (isGlobeKey(e.key)) {
