@@ -1,0 +1,18 @@
+{
+  "files": [
+    "land/north_america.json",
+    "land/south_america.json",
+    "land/africa.json",
+    "land/europe.json",
+    "land/asia.json",
+    "land/australia.json",
+    "land/greenland.json",
+    "land/antarctica.json",
+    "land/japan.json",
+    "land/united_kingdom.json",
+    "land/madagascar.json",
+    "land/new_zealand.json",
+    "land/indonesia.json",
+    "land/borneo.json"
+  ]
+}
