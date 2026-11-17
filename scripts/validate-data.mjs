@@ -23,7 +23,13 @@ const airports = await load('airports');
 const flights = await load('flights');
 const quakes = await load('earthquakes');
 const sats = await load('satellites');
-const land = await load('land');
+const manifest = JSON.parse(await readFile(`${ROOT}/data/land/manifest.json`, 'utf8'));
+const landParts = [];
+for (const f of manifest.files) {
+  landParts.push(JSON.parse(await readFile(`${ROOT}/data/${f}`, 'utf8')));
+}
+const { mergeLandParts } = await import('../js/data.js');
+const land = mergeLandParts(landParts);
 
 check('airports', airports, validateAirport);
 check('flights', flights, (f) => validateFlight(f, new Set(airports.map((a) => a.code))));
