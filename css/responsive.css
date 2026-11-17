@@ -1,0 +1,15 @@
+/* FlightGlobe — responsive: stack sidebar under the globe on narrow screens. */
+@media (max-width: 900px) {
+  #stage { flex-direction: column; overflow-y: auto; }
+  #globeWrap { min-height: 62vh; flex: none; }
+  #sidebar { width: 100%; border-left: 0; border-top: 1px solid var(--line); overflow: visible; }
+  #app { height: auto; min-height: 100vh; }
+  .top-stats { display: none; }
+  #clock { font-size: 17px; }
+}
+@media (max-width: 560px) {
+  #topbar { flex-wrap: wrap; gap: 8px; padding: 10px 12px; }
+  .tagline { display: none; }
+  #timelineBar { flex-wrap: wrap; }
+  #scrubber { flex-basis: 100%; order: 5; }
+}
