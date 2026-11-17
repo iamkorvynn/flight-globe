@@ -547,5 +547,59 @@
     "arr": "18:00",
     "airline": "United",
     "aircraft": "Airbus A330-300"
+  },
+  {
+    "id": "EK3",
+    "from": "DXB",
+    "to": "LHR",
+    "dep": "14:00",
+    "arr": "21:00",
+    "airline": "Emirates",
+    "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "SQ317",
+    "from": "LHR",
+    "to": "SIN",
+    "dep": "11:00",
+    "arr": "01:00",
+    "airline": "Singapore Airlines",
+    "aircraft": "Boeing 787-9"
+  },
+  {
+    "id": "QF11",
+    "from": "SYD",
+    "to": "LAX",
+    "dep": "14:00",
+    "arr": "02:00",
+    "airline": "Qantas",
+    "aircraft": "Boeing 747-8"
+  },
+  {
+    "id": "NZ2",
+    "from": "LAX",
+    "to": "AKL",
+    "dep": "20:00",
+    "arr": "05:00",
+    "airline": "Air New Zealand",
+    "aircraft": "Airbus A330-300"
+  },
+  {
+    "id": "LH714",
+    "from": "FRA",
+    "to": "HND",
+    "dep": "13:00",
+    "arr": "01:00",
+    "airline": "Lufthansa",
+    "aircraft": "Boeing 747-8"
+  },
+  {
+    "id": "AF276",
+    "from": "CDG",
+    "to": "HND",
+    "dep": "13:00",
+    "arr": "02:00",
+    "airline": "Air France",
+    "aircraft": "Airbus A350-900"
   }
 ]
