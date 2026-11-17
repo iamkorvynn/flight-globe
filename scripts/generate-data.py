@@ -255,7 +255,7 @@ def build():
     manifest = []
     for name, poly in LAND.items():
         (land_dir / f"{name}.json").write_text(
-            json.dumps({"name": name, "polygons": [list(p) for p in poly]}, indent=2) + "\n")
+            json.dumps({"name": name, "polygons": [[list(p) for p in poly]]}, indent=2) + "\n")
         manifest.append(f"land/{name}.json")
     (land_dir / "manifest.json").write_text(
         json.dumps({"files": manifest}, indent=2) + "\n")
