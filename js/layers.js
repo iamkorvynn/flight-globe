@@ -128,3 +128,98 @@ export function hitTestPlanes(planes, px, py, tolPx = 14) {
   }
   return best;
 }
+
+/** Draw live OpenSky flight positions as green dots (no schedule attached). */
+export function drawLiveFlights(ctx, liveFlights, view, radius) {
+  const { centerLat, centerLon, cx, cy } = view;
+  for (const f of liveFlights) {
+    const p = project(f.lat, f.lon, centerLat, centerLon, radius * 1.02, cx, cy);
+    if (!p.visible) continue;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#4ade80';
+    ctx.shadowColor = '#22c55e';
+    ctx.shadowBlur = 8;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+}
+
+/** Draw a sun marker at the subsolar point. */
+export function drawSunMarker(ctx, sunLat, sunLon, view, radius) {
+  const { centerLat, centerLon, cx, cy } = view;
+  const p = project(sunLat, sunLon, centerLat, centerLon, radius * 1.05, cx, cy);
+  if (!p.visible) return;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 9, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(253, 230, 138, 0.9)';
+  ctx.shadowColor = '#fde68a';
+  ctx.shadowBlur = 18;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+  ctx.fillStyle = '#fef08a';
+  ctx.fill();
+}
+
+/** Hit-test: nearest quake within `tolPx` of a screen point. */
+export function hitTestQuakes(quakes, view, radius, px, py, tolPx = 16) {
+  const { centerLat, centerLon, cx, cy } = view;
+  let best = null;
+  let bestD = tolPx;
+  for (const q of quakes) {
+    const p = project(q.lat, q.lon, centerLat, centerLon, radius, cx, cy);
+    if (!p.visible) continue;
+    const d = Math.hypot(p.x - px, p.y - py);
+    if (d < bestD) { bestD = d; best = { quake: q, screen: p }; }
+  }
+  return best;
+}
+
+/** Draw a pulsing ring at a lat/lon (e.g. a searched airport). */
+export function drawPulse(ctx, lat, lon, view, radius, phase) {
+  const { centerLat, centerLon, cx, cy } = view;
+  const p = project(lat, lon, centerLat, centerLon, radius, cx, cy);
+  if (!p.visible) return;
+  const r = 6 + (phase % 1) * 18;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+  ctx.strokeStyle = `rgba(56, 189, 248, ${0.8 * (1 - (phase % 1))})`;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+/** Draw the measurement line + endpoints, if a measurement is in progress. */
+export function drawMeasurement(ctx, measurement, view, radius) {
+  if (!measurement || !measurement.start) return;
+  const { centerLat, centerLon, cx, cy } = view;
+  const s = project(measurement.start.lat, measurement.start.lon, centerLat, centerLon, radius, cx, cy);
+  if (s.visible) {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#f59e0b';
+    ctx.fill();
+  }
+  if (!measurement.end) return;
+  const pts = sampleArc(measurement.start.lat, measurement.start.lon,
+    measurement.end.lat, measurement.end.lon, 48, 0.05);
+  ctx.beginPath();
+  let pen = false;
+  for (const pt of pts) {
+    const p = project(pt.lat, pt.lon, centerLat, centerLon, radius * pt.lift, cx, cy);
+    if (!p.visible) { pen = false; continue; }
+    if (!pen) { ctx.moveTo(p.x, p.y); pen = true; }
+    else ctx.lineTo(p.x, p.y);
+  }
+  ctx.strokeStyle = 'rgba(245, 158, 11, 0.9)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  const e = project(measurement.end.lat, measurement.end.lon, centerLat, centerLon, radius, cx, cy);
+  if (e.visible) {
+    ctx.beginPath();
+    ctx.arc(e.x, e.y, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#f59e0b';
+    ctx.fill();
+  }
+}
