@@ -3,8 +3,10 @@
 // night shading / land drawing complete without throwing.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { drawGraticule, drawLand, drawLimb, drawNight, drawOcean } from '../js/render.js';
-import { drawPlane, drawQuakes, drawLiveFlights, drawPulse, drawSunMarker, hitTestPlanes, hitTestQuakes, drawMeasurement } from '../js/layers.js';
+import { drawFlatGraticule, drawFlatMap, drawGraticule, drawLand, drawLimb, drawNight, drawOcean } from '../js/render.js';
+import { drawPlane, drawQuakes, drawLiveFlights, drawPulse, drawSunMarker, drawTrail, hitTestAirports, hitTestPlanes, hitTestQuakes, hitTestSatellites, drawMeasurement } from '../js/layers.js';
+import { makeFlatProjector, project } from '../js/math.js';
+import { satellitePosition } from '../js/satellites.js';
 
 function makeCtx() {
   const calls = [];
@@ -137,4 +139,55 @@ test('drawPulse and drawMeasurement complete without throwing', () => {
   assert.doesNotThrow(() => drawMeasurement(ctx, { start: { lat: 51, lon: 0 }, end: { lat: 40, lon: -74 } }, VIEW, 300));
   assert.doesNotThrow(() => drawMeasurement(ctx, { start: null, end: null }, VIEW, 300));
   assert.ok(ctx.calls.some((c) => c === 'stroke'), 'measurement arc stroked');
+});
+
+test('drawFlatMap fills the background and draws land polygons', () => {
+  const ctx = makeCtx();
+  const projector = makeFlatProjector(720, 360);
+  drawFlatMap(ctx, LAND, 720, 360, projector);
+  assert.ok(ctx.calls.includes('fillRect'), 'ocean background filled');
+  assert.ok(ctx.calls.filter((c) => c === 'fill').length >= 2, 'land polygons filled');
+});
+
+test('drawFlatGraticule strokes straight grid lines', () => {
+  const ctx = makeCtx();
+  const projector = makeFlatProjector(720, 360);
+  drawFlatGraticule(ctx, 720, 360, projector);
+  assert.ok(ctx.calls.filter((c) => c === 'stroke').length >= 9, 'grid lines stroked');
+});
+
+test('hitTestSatellites finds a satellite dot near the cursor', () => {
+  const sats = [{ name: 'ISS', inclination: 51.6, periodMin: 92.9, phase: 12, altitudeKm: 420 }];
+  // Project the ISS position at minute 0 and click exactly on it.
+  const pos = satellitePosition(sats[0], 0);
+  const p = project(pos.lat, pos.lon, VIEW.centerLat, VIEW.centerLon, 300 * 1.12, VIEW.cx, VIEW.cy);
+  assert.ok(p.visible, 'ISS should be visible from this centre at minute 0');
+  const hit = hitTestSatellites(sats, 0, VIEW, 300, p.x, p.y);
+  assert.ok(hit && hit.satellite.name === 'ISS');
+  assert.equal(hitTestSatellites(sats, 0, VIEW, 300, 10, 10), null);
+});
+
+test('hitTestAirports finds the nearest airport', () => {
+  const airports = [
+    { code: 'LHR', city: 'London', lat: 51.47, lon: -0.45 },
+    { code: 'JFK', city: 'New York', lat: 40.64, lon: -73.78 },
+  ];
+  const view = { centerLat: 51.47, centerLon: -0.45, cx: 450, cy: 450 };
+  const hit = hitTestAirports(airports, view, 300, 450, 450);
+  assert.ok(hit && hit.airport.code === 'LHR');
+  assert.equal(hitTestAirports(airports, view, 300, 100, 100), null);
+});
+
+test('drawTrail draws the flown segment and skips zero progress', () => {
+  const ctx = makeCtx();
+  const byCode = new Map([
+    ['SIN', { lat: 1.36, lon: 103.99 }],
+    ['LHR', { lat: 51.47, lon: -0.45 }],
+  ]);
+  const view = { centerLat: 20, centerLon: 10, cx: 450, cy: 450 };
+  drawTrail(ctx, { from: 'SIN', to: 'LHR' }, byCode, 0.5, view, 300);
+  assert.ok(ctx.calls.includes('stroke'), 'trail stroked at 50%');
+  const ctx2 = makeCtx();
+  drawTrail(ctx2, { from: 'SIN', to: 'LHR' }, byCode, 0, view, 300);
+  assert.equal(ctx2.calls.filter((c) => c === 'stroke').length, 0, 'no trail at 0%');
 });
