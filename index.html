@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FlightGlobe — Live World Globe</title>
 <meta name="description" content="FlightGlobe: one-screen interactive globe with live-feeling flights, earthquakes, satellites and a time scrubber.">
+<link rel="icon" href="public/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/globe.css">
 <link rel="stylesheet" href="css/panel.css">
 <link rel="stylesheet" href="css/controls.css">
+<link rel="stylesheet" href="css/toolbar.css">
 <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
@@ -30,6 +32,20 @@
       <canvas id="globe" width="900" height="900" aria-label="Interactive world globe"></canvas>
       <div id="globeHint">Drag to spin &middot; Scroll to zoom &middot; Click a plane to follow it</div>
       <div id="clock" aria-live="off">--:-- UTC</div>
+      <div id="toolbar">
+        <button id="resetViewBtn" type="button" title="Reset the camera to the default view">Reset view</button>
+        <button id="rotateBtn" type="button" title="Slowly auto-rotate the globe">Auto-rotate</button>
+        <button id="measureBtn" type="button" title="Measure: click two points on the globe">Measure</button>
+        <button id="exportBtn" type="button" title="Download the current globe view as a PNG">Export PNG</button>
+      </div>
+      <div id="measureHint" hidden>Measuring — click two points on the globe. <button id="measureCancelBtn" type="button">Cancel</button></div>
+      <div id="presetBar">
+        <span>Jump to</span>
+        <button type="button" data-preset="0">Midnight</button>
+        <button type="button" data-preset="360">Dawn</button>
+        <button type="button" data-preset="720">Noon</button>
+        <button type="button" data-preset="1080">Dusk</button>
+      </div>
     </section>
 
     <aside id="sidebar">
