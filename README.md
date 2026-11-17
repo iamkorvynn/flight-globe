@@ -1,6 +1,12 @@
 # FlightGlobe
 
+![CI](https://github.com/iamkorvynn/flight-globe/actions/workflows/ci.yml/badge.svg)
+![Tests](https://img.shields.io/badge/tests-88%20passing-brightgreen)
+![Deps](https://img.shields.io/badge/dependencies-0-blue)
+
 **One screen. The whole planet, moving.**
+
+![FlightGlobe preview](docs/preview.svg)
 
 FlightGlobe is a real-time world globe web app: an interactive orthographic
 globe (drag to spin, scroll to zoom) with toggleable layers for **flights**,
