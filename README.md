@@ -17,12 +17,12 @@ pulls live data from free public APIs when the network is available.
 - **Globe** — orthographic projection on canvas, drag-to-rotate, zoom, and a
   bundled simplified world coastline dataset (`data/land.json`, 14 polygons).
   No map tiles are fetched at runtime.
-- **Flights layer** — great-circle arcs between 40 airports, 49 sample
+- **Flights layer** — great-circle arcs between 50 airports, 61 sample
   flights, moving plane markers, airport dots. Click a plane (or a row in the
   sidebar list) for route, distance, duration and aircraft.
 - **Earthquakes layer** — 30 sample quakes, markers sized and coloured by
   magnitude, strongest-quake stat in the sidebar.
-- **Satellites layer** — 12 satellites (ISS, Starlink, NOAA-20, Hubble,
+- **Satellites layer** — 16 satellites (ISS, Starlink, NOAA-20, Hubble,
   Tiangong, GPS, GOES-16…) on orbit rings with moving dots.
 - **Time scrubber (the twist)** — drag the 24-hour timeline and watch flights
   move along their arcs while the day/night terminator sweeps the globe.
